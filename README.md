@@ -21,8 +21,23 @@ interface Build {
 ```
 
 ### UI Sketches
-[placeholder]
+![alt text](image.png)
 
 ### Component List
+- `BuildList`: Renders a flatlist of builds
+- `BuildCard`: Displays details of build
+- `BuildEquipmentList`: Renders a list of equipment used in a build
+- `EquipmentCard`: Displays equiment detail
+- `AddBuildForm`: Form to create build
+- `EquipmentSelector`: Shows a list of equipment you can use in the build
+- `FilterSelector`: Selector to filter by element, by monster, by weapon type, name or skill
+- `SortSelector`: Selector to sort by damage, defense, alphabetically or skill
 
 ### Filter Options
+Filters:
+- Builds: Element / Monster / Weapon Type / Name
+- Equipment: Skill / Decoration Slots / Name
+
+Sorting: 
+- Builds: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
+- Equipment: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
