@@ -21,7 +21,7 @@ interface Build {
 ```
 
 ### UI Sketches
-![alt text](image.png)
+![alt text](./assets/ui-concept.png)
 
 ### Component List
 - `BuildList`: Renders a flatlist of builds
