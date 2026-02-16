@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, Button, TextInput } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Build, Weapon, Armor } from './interfaces';
 import { WEAPON_ICONS, ARMOR_ICONS, BUILDS_TEMPLATE, ELEMENT_ICONS } from './data';
-import { build_list_styles, general_styles } from './styles';
+import { build_list_styles, builds_display_styles, general_styles } from './styles';
 
 export default function App() {
   const [builds] = useState<Build[]>(BUILDS_TEMPLATE);
@@ -20,6 +20,7 @@ export default function App() {
             <Text>{item.weapon.damage} DMG</Text>
             <Image source={ELEMENT_ICONS[item.weapon.element]} style={build_list_styles.build_list_element} />
           </View>
+
           <Text>{
             item.helm.defense + 
             item.chest.defense +
@@ -43,6 +44,16 @@ export default function App() {
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
+        </View>
+
+        <View style={builds_display_styles.bottom_bar}>
+          <View style={builds_display_styles.bottom_bar_buttons}>
+            <Button title='SORT'></Button>
+            <Button title='FILTER'></Button>
+            <Button title='DISPLAY'></Button>
+          </View>
+
+          <TextInput placeholder="Search Name (will be implemented later)"/>
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

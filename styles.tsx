@@ -3,13 +3,27 @@ import { StyleSheet } from 'react-native';
 export const general_styles = StyleSheet.create({
     safe_area: {
          flex: 1, 
-         backgroundColor: '#fff'
+         backgroundColor: 'rgb(232, 226, 207)'
     },
 
     main: {
         flex: 1, 
         alignItems: 'center'
     }
+});
+
+export const builds_display_styles = StyleSheet.create({
+  bottom_bar: {
+    margin: 20
+  },
+
+  bottom_bar_buttons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 50,
+    marginRight: 50
+  }
 });
 
 export const build_list_styles = StyleSheet.create({
