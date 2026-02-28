@@ -60,7 +60,7 @@ Sorting:
 
 ##### Item level
 
-/builds/[id] -> Todo detail (dynamic route)
+/builds/[id] -> build detail (dynamic route)
 
 /builds/[id]/edit -> Edit screen (dynamic route)
 
