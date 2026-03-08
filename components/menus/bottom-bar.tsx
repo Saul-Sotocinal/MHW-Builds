@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, FlatList, Image, Button, TextInput } from 'react-native';
-import { build_list_styles, builds_display_styles, general_styles } from '../styles';
+import { StyleSheet, View, Button, TextInput } from 'react-native';
 import { useState } from 'react';
-import { FilterMenu } from './filter-menu';
-import { Build } from '../interfaces';
-import { SortMenu } from './sort-menu';
+import { FilterMenu } from '../menus/filter-menu';
+import { Build } from '../../interfaces';
+import { SortMenu } from '../menus/sort-menu';
 
 export function BottomBar({ props }: { props: BottomBarProps }) {
   const [filter, setFilter] = useState(false)
@@ -28,8 +27,8 @@ export function BottomBar({ props }: { props: BottomBarProps }) {
     setFilter(false)
   }
 
-  return <View style={builds_display_styles.bottom_bar}>
-    <View style={builds_display_styles.bottom_bar_buttons}>
+  return <View style={style.bottom_bar}>
+    <View style={style.bottom_bar_buttons}>
       <Button title='SORT' onPress={showSorting}></Button>
       <Button title='FILTER' onPress={showFilters}></Button>
       <Button title='DISPLAY' onPress={changeDisplay}></Button>
@@ -48,3 +47,17 @@ interface BottomBarProps {
   builds: Build[], 
   setBuilds: React.Dispatch<React.SetStateAction<Build[]>> 
 }
+
+const style = StyleSheet.create({
+  bottom_bar: {
+    margin: 20
+  },
+
+  bottom_bar_buttons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginLeft: 50,
+    marginRight: 50
+  }
+});

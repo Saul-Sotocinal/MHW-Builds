@@ -1,15 +1,10 @@
-import { StyleSheet, Text, View, FlatList, Image, Button, TextInput } from 'react-native';
-import { general_styles, sort_styles } from '../styles';
-import { useState } from 'react';
-import { BUILDS_TEMPLATE, WEAPON_ICONS } from '../data';
-import { Checkbox } from 'expo-checkbox';
-import { Build } from '../interfaces';
+import { View, Button, StyleSheet } from 'react-native';
+import { Build } from '../../interfaces';
 
 export function SortMenu({ display, builds, setBuilds }:
   { display: boolean, builds: Build[], setBuilds: React.Dispatch<React.SetStateAction<Build[]>> }) {
   return (
-    <View
-      style={[{ display: display ? "flex" : "none" }, sort_styles.menu]}>
+    <View style={[{ display: display ? "flex" : "none" }, style.menu]}>
       <Button
         title="Name"
         onPress={() => {
@@ -72,3 +67,16 @@ export function SortMenu({ display, builds, setBuilds }:
     </View>
   );
 }
+
+const style = StyleSheet.create({
+  menu: {
+    position: 'absolute',
+    bottom: 40,
+    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    width: '100%',
+    padding: 5,
+    flexWrap: 'wrap',
+    gap: 5,
+    flexDirection: 'row',
+  }
+})

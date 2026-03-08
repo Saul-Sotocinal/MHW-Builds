@@ -1,6 +1,7 @@
-import { Build, Weapon, Armor } from './interfaces';
+import { Build } from './interfaces';
 
-export const WEAPON_ICONS: { [name: string]: any} = {
+export const EQUIPMENT_ICONS: { [name: string]: any} = {
+    // WEAPONS
     "greatsword": require(`./assets/weapon-icons/greatsword.png`),
     "longsword": require(`./assets/weapon-icons/longsword.png`),
     "sword_and_shield": require(`./assets/weapon-icons/sword-and-shield.png`),
@@ -15,9 +16,8 @@ export const WEAPON_ICONS: { [name: string]: any} = {
     "light_bowgun": require(`./assets/weapon-icons/light-bowgun.png`),
     "heavy_bowgun": require(`./assets/weapon-icons/heavy-bowgun.png`),
     "bow": require(`./assets/weapon-icons/bow.png`),
-}
 
-export const ARMOR_ICONS: { [name: string]: any} = {
+    // ARMOR
     "helm": require(`./assets/armor-icons/helm.webp`),
     "chest": require(`./assets/armor-icons/chest.webp`),
     "gloves": require(`./assets/armor-icons/gloves.webp`),
@@ -42,7 +42,7 @@ export const ELEMENT_ICONS: { [name: string]: any} = {
 export const BUILDS_TEMPLATE: Build[] = [
   { id: "1", 
     name: "Rejuvination Instramenthormn",
-    weapon: { name: "Magia Charmbell", type: "hunting_horn", element: "ice", damage: 180 },
+    weapon: { name: "Magia Charmbell", type: "hunting_horn", element: "water", damage: 180 },
     helm: { name: "Anja Helm", type: "helm", defense: 12 },
     chest: { name: "Rathalos Mail", type: "chest", defense: 36 },
     gloves: { name: "Kadachi Vambraces", type: "gloves", defense: 30 },

@@ -21,7 +21,7 @@ interface Build {
 ```
 
 ### UI Sketches
-![alt text](./assets/ui-concept.png)
+![alt text](./assets/readme-diagrams/ui-concept.png)
 
 ### Component List
 - `BuildList`: Renders a flatlist of builds
@@ -41,3 +41,36 @@ Filters:
 Sorting: 
 - Builds: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
 - Equipment: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
+
+## Part 2
+
+### Route Plan
+/ -> Root (redirects to /(drawer)/builds)
+
+##### Main Routes
+/(drawer)/builds -> main screen
+
+/(drawer)/monsters -> to see associated weapons
+
+/(drawer)/profile -> user information (not to be implemented yet)
+
+/(drawer)/hunters -> friends(not to be implemented yet)
+
+/(drawer)/map -> to view hunter friends locations (no to be implemented yet)
+
+##### Item level
+
+/builds/[id] -> build detail (dynamic route)
+
+/builds/[id]/edit -> Edit screen (dynamic route)
+
+##### Other routes
+
+/builds/create -> Create modal (presented over current screen)
+
+### State Diagram
+![alt text](./assets/readme-diagrams/state-diagram.png)
+
+### UI Sketches
+Editbuild screen and detailedBuild screen which will look like the card from part 1.
+![alt text](./assets/readme-diagrams/ui-concept2.png)
