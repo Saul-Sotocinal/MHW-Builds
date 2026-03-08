@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, FlatList, Image, Button, TextInput } from 'react-native';
-import { filter_styles, general_styles } from '../styles';
+import { View, FlatList, Image, Button, StyleSheet } from 'react-native';
 import { useState } from 'react';
-import { BUILDS_TEMPLATE, WEAPON_ICONS } from '../data';
+import { BUILDS_TEMPLATE, EQUIPMENT_ICONS } from '../../data';
 import { Checkbox } from 'expo-checkbox';
-import { Build } from '../interfaces';
+import { Build } from '../../interfaces';
 
 const INITIAL_ITEMS: FilterItem[] = [
   { id: '1', type: 'greatsword', selected: true },
@@ -27,7 +26,7 @@ export function FilterMenu({ display, builds, setBuilds }:
   const [items, setItems] = useState<FilterItem[]>(INITIAL_ITEMS)
 
   const renderItem = ({ item }: { item: FilterItem }) => (
-    <View style={filter_styles.item}>
+    <View style={style.item}>
       <Checkbox onValueChange={() => {
         setItems(items.map((x) => {
           if (x.id !== item.id) {
@@ -35,15 +34,12 @@ export function FilterMenu({ display, builds, setBuilds }:
           }
 
           if (x.selected) {
-            let newBuilds = builds
-              .map((x) => {
-                if (item.type !== x.weapon.type) return x;
-              })
+            let newBuilds: Build[] = builds
               .filter((x) => {
-                if (x !== null && x !== undefined) return x;
+                if (item.type !== x.weapon.type) return x;
               });
 
-            setBuilds(newBuilds); // < It's complaining but is guaranteed to work
+            setBuilds(newBuilds);
           } else {
             let newBuilds = [
               ...builds,
@@ -63,12 +59,12 @@ export function FilterMenu({ display, builds, setBuilds }:
           return { ...x, selected: !x.selected };
         }))
       }} value={item.selected} />
-      <Image source={WEAPON_ICONS[item.type]} />
+      <Image source={EQUIPMENT_ICONS[item.type]} />
     </View>
   )
 
   return (
-    <View style={[{ display: display ? "flex" : "none" }, filter_styles.menu]}>
+    <View style={[{ display: display ? "flex" : "none" }, style.menu]}>
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -89,3 +85,24 @@ interface FilterItem {
   type: string,
   selected: boolean
 }
+
+const style = StyleSheet.create({
+  menu: {
+    position: "absolute",
+    bottom: 40,
+    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    width: "100%",
+    alignItems: "center"
+  },
+
+  item: {
+    backgroundColor: "white",
+    padding: 5,
+    margin: 2,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    width: "100%",
+  }
+})
