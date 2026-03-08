@@ -1,10 +1,10 @@
-import { Build } from "../../interfaces"
-import { View, ImageBackground, Image, StyleSheet, Text} from "react-native"
-import { Title } from "../decorative/title"
-import { ELEMENT_ICONS, EQUIPMENT_ICONS } from '../../data';
+import { ELEMENT_ICONS, EQUIPMENT_ICONS } from '@/data/data';
+import { Build } from "@/types/interfaces";
+import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import { LineMark } from "../decorative/line-mark";
+import { Title } from "../decorative/title";
 
-const ICON_BACKGROUND = require('../../assets/ui_elements/icon_border.png')
+const ICON_BACKGROUND = require('@assets/ui_elements/icon_border.png')
 
 export function CompactCard({ item }: { item: Build }) {
   return <View style={style.item}>

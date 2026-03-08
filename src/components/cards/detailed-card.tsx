@@ -1,8 +1,8 @@
-import { Build } from "../../interfaces"
-import { View, StyleSheet, Text, Image } from "react-native"
-import { EQUIPMENT_ICONS, ELEMENT_ICONS } from "../../data"
-import { Title } from "../decorative/title"
+import { ELEMENT_ICONS, EQUIPMENT_ICONS } from "@/data/data"
+import { Build } from "@/types/interfaces"
+import { Image, StyleSheet, Text, View } from "react-native"
 import { LineMark } from "../decorative/line-mark"
+import { Title } from "../decorative/title"
 
 export function DetailedCard({ item }: { item: Build }) {
   return <View style={style.item}>

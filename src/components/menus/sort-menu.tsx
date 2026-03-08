@@ -1,5 +1,5 @@
-import { View, Button, StyleSheet } from 'react-native';
-import { Build } from '../../interfaces';
+import { Build } from '@/types/interfaces';
+import { Button, StyleSheet, View } from 'react-native';
 
 export function SortMenu({ display, builds, setBuilds }:
   { display: boolean, builds: Build[], setBuilds: React.Dispatch<React.SetStateAction<Build[]>> }) {

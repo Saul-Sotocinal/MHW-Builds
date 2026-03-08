@@ -1,42 +1,42 @@
-import { Build } from './interfaces';
+import { Build } from '../types/interfaces';
 
 export const EQUIPMENT_ICONS: { [name: string]: any} = {
     // WEAPONS
-    "greatsword": require(`./assets/weapon-icons/greatsword.png`),
-    "longsword": require(`./assets/weapon-icons/longsword.png`),
-    "sword_and_shield": require(`./assets/weapon-icons/sword-and-shield.png`),
-    "dual_blades": require(`./assets/weapon-icons/dual-blades.png`),
-    "hammer": require(`./assets/weapon-icons/hammer.png`),
-    "hunting_horn": require(`./assets/weapon-icons/hunting-horn.png`),
-    "lance": require(`./assets/weapon-icons/lance.png`),
-    "gunlance": require(`./assets/weapon-icons/gunlance.png`),
-    "switch_axe": require(`./assets/weapon-icons/switch-axe.png`),
-    "charge_blade": require(`./assets/weapon-icons/charge-blade.png`),
-    "insect_glaive": require(`./assets/weapon-icons/insect-glaive.png`),
-    "light_bowgun": require(`./assets/weapon-icons/light-bowgun.png`),
-    "heavy_bowgun": require(`./assets/weapon-icons/heavy-bowgun.png`),
-    "bow": require(`./assets/weapon-icons/bow.png`),
+    "greatsword": require(`@assets/weapon-icons/greatsword.png`),
+    "longsword": require(`@assets/weapon-icons/longsword.png`),
+    "sword_and_shield": require(`@assets/weapon-icons/sword-and-shield.png`),
+    "dual_blades": require(`@assets/weapon-icons/dual-blades.png`),
+    "hammer": require(`@assets/weapon-icons/hammer.png`),
+    "hunting_horn": require(`@assets/weapon-icons/hunting-horn.png`),
+    "lance": require(`@assets/weapon-icons/lance.png`),
+    "gunlance": require(`@assets/weapon-icons/gunlance.png`),
+    "switch_axe": require(`@assets/weapon-icons/switch-axe.png`),
+    "charge_blade": require(`@assets/weapon-icons/charge-blade.png`),
+    "insect_glaive": require(`@assets/weapon-icons/insect-glaive.png`),
+    "light_bowgun": require(`@assets/weapon-icons/light-bowgun.png`),
+    "heavy_bowgun": require(`@assets/weapon-icons/heavy-bowgun.png`),
+    "bow": require(`@assets/weapon-icons/bow.png`),
 
     // ARMOR
-    "helm": require(`./assets/armor-icons/helm.webp`),
-    "chest": require(`./assets/armor-icons/chest.webp`),
-    "gloves": require(`./assets/armor-icons/gloves.webp`),
-    "waist": require(`./assets/armor-icons/waist.webp`),
-    "legs": require(`./assets/armor-icons/legs.webp`),
-    "talisman": require(`./assets/armor-icons/talisman.png`),
+    "helm": require(`@assets/armor-icons/helm.webp`),
+    "chest": require(`@assets/armor-icons/chest.webp`),
+    "gloves": require(`@assets/armor-icons/gloves.webp`),
+    "waist": require(`@assets/armor-icons/waist.webp`),
+    "legs": require(`@assets/armor-icons/legs.webp`),
+    "talisman": require(`@assets/armor-icons/talisman.png`),
 }
 
 export const ELEMENT_ICONS: { [name: string]: any} = {
-    "raw": require(`./assets/element-icons/raw.png`),
-    "fire": require(`./assets/element-icons/fire.webp`),
-    "thunder": require(`./assets/element-icons/thunder.webp`),
-    "dragon": require(`./assets/element-icons/dragon.png`),
-    "water": require(`./assets/element-icons/water.webp`),
-    "ice": require(`./assets/element-icons/ice.webp`),
-    "blast": require(`./assets/element-icons/blast.webp`),
-    "paralysis": require(`./assets/element-icons/paralysis.webp`),
-    "poison": require(`./assets/element-icons/poison.webp`),
-    "sleep": require(`./assets/element-icons/sleep.webp`)
+    "raw": require(`@assets/element-icons/raw.png`),
+    "fire": require(`@assets/element-icons/fire.webp`),
+    "thunder": require(`@assets/element-icons/thunder.webp`),
+    "dragon": require(`@assets/element-icons/dragon.png`),
+    "water": require(`@assets/element-icons/water.webp`),
+    "ice": require(`@assets/element-icons/ice.webp`),
+    "blast": require(`@assets/element-icons/blast.webp`),
+    "paralysis": require(`@assets/element-icons/paralysis.webp`),
+    "poison": require(`@assets/element-icons/poison.webp`),
+    "sleep": require(`@assets/element-icons/sleep.webp`)
 }
 
 export const BUILDS_TEMPLATE: Build[] = [

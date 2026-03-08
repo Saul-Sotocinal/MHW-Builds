@@ -1,7 +1,7 @@
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import { Build } from '@/types/interfaces';
 import { useState } from 'react';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { FilterMenu } from '../menus/filter-menu';
-import { Build } from '../../interfaces';
 import { SortMenu } from '../menus/sort-menu';
 
 export function BottomBar({ props }: { props: BottomBarProps }) {

@@ -1,7 +1,7 @@
-import { StyleSheet, Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 export function LineMark() {
-  const LINE_BORDER = require('../../assets/ui_elements/line_mark.png')
+  const LINE_BORDER = require('@assets/ui_elements/line_mark.png')
 
   return <Image source={LINE_BORDER} style={style.line} />
 }

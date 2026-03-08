@@ -1,8 +1,8 @@
-import { View, FlatList, Image, Button, StyleSheet } from 'react-native';
-import { useState } from 'react';
-import { BUILDS_TEMPLATE, EQUIPMENT_ICONS } from '../../data';
+import { BUILDS_TEMPLATE, EQUIPMENT_ICONS } from '@/data/data';
+import { Build } from '@/types/interfaces';
 import { Checkbox } from 'expo-checkbox';
-import { Build } from '../../interfaces';
+import { useState } from 'react';
+import { Button, FlatList, Image, StyleSheet, View } from 'react-native';
 
 const INITIAL_ITEMS: FilterItem[] = [
   { id: '1', type: 'greatsword', selected: true },

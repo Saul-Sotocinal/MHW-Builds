@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import { Build } from '../../interfaces';
+import { Build } from '@/types/interfaces';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { CompactCard } from './compact-card';
 import { DetailedCard } from './detailed-card';
 

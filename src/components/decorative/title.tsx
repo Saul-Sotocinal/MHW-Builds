@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { TextStroke } from './text-stroke';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { LineMark } from './line-mark';
+import { TextStroke } from './text-stroke';
 
 export function Title({ title, width, bgColor }: { title: string, width: number, bgColor: string }) {
-  const TITLE_BORDER = require('../../assets/ui_elements/title_border.png')
+  const TITLE_BORDER = require('@assets/ui_elements/title_border.png')
 
   return <View>
   <LineMark/>
