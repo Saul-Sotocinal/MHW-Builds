@@ -1,5 +1,4 @@
 import { BuildList } from '@/components/builds/build-list';
-import { BuildsContextProvider } from '@/components/builds/builds-context-provider';
 import { BottomBar } from '@/components/menus/bottom-bar';
 import { useState } from 'react';
 import { ImageBackground, Platform, StyleSheet } from 'react-native';
@@ -10,18 +9,16 @@ export default function Builds() {
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
   return (
-    <BuildsContextProvider>
-      <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
-        <SafeAreaProvider>
-          <SafeAreaView style={style.safe_area}>
-            <BuildList view={viewMode} />
+    <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
+      <SafeAreaProvider>
+        <SafeAreaView style={style.safe_area}>
+          <BuildList view={viewMode} />
 
-            <BottomBar props={{ viewMode, setViewMode }} />
+          <BottomBar props={{ viewMode, setViewMode }} />
 
-          </SafeAreaView>
-        </SafeAreaProvider>
-      </ImageBackground>
-    </BuildsContextProvider>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </ImageBackground>
   );
 }
 

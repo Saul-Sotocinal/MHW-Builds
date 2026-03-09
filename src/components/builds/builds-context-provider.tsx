@@ -1,3 +1,12 @@
+/**
+ * How to use the useContext react hook for passing and modifying its value 
+ * by stack overflow user Adam Jenkins
+ * https://stackoverflow.com/users/954940/adam-jenkins
+ * 
+ * Question:
+ * https://stackoverflow.com/questions/69247544/how-to-properly-change-react-context-value
+ */
+
 import { BuildsContext } from "@/data/builds-context";
 import { BUILDS_TEMPLATE } from "@/data/data";
 import { Build } from "@/types/interfaces";

@@ -1,18 +1,21 @@
 import { EquipmentIcon } from "@/components/decorative/equipment-icon";
 import { LineMark } from "@/components/decorative/line-mark";
 import { Title } from "@/components/decorative/title";
-import { BUILDS_TEMPLATE, ELEMENT_ICONS } from "@/data/data";
+import { BuildsContext } from "@/data/builds-context";
+import { ELEMENT_ICONS } from "@/data/data";
 import { Armor, Weapon } from "@/types/interfaces";
 import { useLocalSearchParams } from "expo-router";
+import { useContext } from "react";
 import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function BuildDetailScreen() {
+  const {builds, setBuilds} = useContext(BuildsContext)!;
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
   const { id } = useLocalSearchParams<{ id: string }>();
-  const build = BUILDS_TEMPLATE.find((t) => t.id === id);
+  const build = builds.find((b) => b.id === id);
 
   if (!build) {
     return (
