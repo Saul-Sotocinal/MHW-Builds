@@ -4,11 +4,11 @@ import { Title } from "@/components/decorative/title";
 import { BUILDS_TEMPLATE, ELEMENT_ICONS } from "@/data/data";
 import { Armor, Weapon } from "@/types/interfaces";
 import { useLocalSearchParams } from "expo-router";
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function TaskDetailScreen() {
+export default function BuildDetailScreen() {
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -16,7 +16,7 @@ export default function TaskDetailScreen() {
 
   if (!build) {
     return (
-      <ImageBackground source={BACKGROUND_IMAGE} style={{ flex: 1, justifyContent: 'center' }} resizeMode='stretch'>
+      <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
         <SafeAreaProvider>
           <SafeAreaView style={style.safe_area}>
             <Text>Not Found</Text>
@@ -30,34 +30,38 @@ export default function TaskDetailScreen() {
     <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
       <SafeAreaProvider>
         <SafeAreaView style={style.safe_area}>
-          <View style={style.build}>
-            <Title title={build.name} width={130} bgColor='rgba(255, 234, 172, 0.7)' />
+          <View>
+            <ScrollView>
+              <View style={style.build}>
+                <Title title={build.name} width={130} bgColor='#b93f32' decoColor='#dac342'/>
 
-            <View>
-              <WeaponCard weapon={build.weapon} />
-              <ArmorCard armor={build.helm} />
-              <ArmorCard armor={build.chest} />
-              <ArmorCard armor={build.gloves} />
-              <ArmorCard armor={build.waist} />
-              <ArmorCard armor={build.legs} />
-              <ArmorCard armor={build.talisman} />
-            </View>
+                <View>
+                  <EquipmentCard equipment={build.weapon} />
+                  <EquipmentCard equipment={build.helm} />
+                  <EquipmentCard equipment={build.chest} />
+                  <EquipmentCard equipment={build.gloves} />
+                  <EquipmentCard equipment={build.waist} />
+                  <EquipmentCard equipment={build.legs} />
+                  <EquipmentCard equipment={build.talisman} />
+                </View>
 
-            <View style={style.stats}>
-              <View style={style.attack}>
-                <Text style={style.stats_details}>{build.weapon.damage} ATK</Text>
-                <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
+                <View style={style.stats}>
+                  <View style={style.attack}>
+                    <Text style={style.stats_details}>{build.weapon.damage} ATK</Text>
+                    <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
+                  </View>
+                  <Text style={style.stats_details}>{
+                    build.helm.defense +
+                    build.chest.defense +
+                    build.gloves.defense +
+                    build.waist.defense +
+                    build.legs.defense
+                  } DEF
+                  </Text>
+                </View>
+                <LineMark />
               </View>
-              <Text style={style.stats_details}>{
-                build.helm.defense +
-                build.chest.defense +
-                build.gloves.defense +
-                build.waist.defense +
-                build.legs.defense
-              } DEF
-              </Text>
-            </View>
-            <LineMark />
+            </ScrollView>
           </View>
         </SafeAreaView>
       </SafeAreaProvider>
@@ -65,37 +69,30 @@ export default function TaskDetailScreen() {
   );
 }
 
-function WeaponCard({ weapon }: { weapon: Weapon }) {
+function EquipmentCard({ equipment }: { equipment: Weapon | Armor }) {
   return <View style={card_style.item} >
-      <EquipmentIcon type={weapon.type} size={70}/>
-
-      <View style={card_style.details}>
-        <Title title={weapon.name} width={15} bgColor='rgba(255, 234, 172, 0.7)' />
-
-        <View style={card_style.stats}>
-          <View style={card_style.damage}>
-            <Text style={card_style.text}>{weapon.damage} DMG</Text>
-            <Image source={ELEMENT_ICONS[weapon.element]} style={card_style.element} />
-          </View>
-        </View>
-        <LineMark />
-      </View>
-    </View>
-}
-
-function ArmorCard({ armor }: { armor: Armor }) {
-  return <View style={card_style.item} >
-    <EquipmentIcon type={armor.type} size={70} />
+    <EquipmentIcon type={equipment.type} size={70} />
 
     <View style={card_style.details}>
-      <Title title={armor.name} width={15} bgColor='rgba(255, 234, 172, 0.7)' />
+      <Title title={equipment.name} width={15} bgColor='rgba(255, 234, 172, 0.7)' decoColor='#854305' />
 
       <View style={card_style.stats}>
-        <Text style={card_style.text}>{armor.defense} DEF</Text>
+        {isWeapon(equipment) ?
+          <View style={card_style.damage}>
+            <Text style={card_style.text}>{equipment.damage} DMG</Text>
+            <Image source={ELEMENT_ICONS[equipment.element]} style={card_style.element} />
+          </View>
+          :
+          <Text style={card_style.text}>{equipment.defense} DEF</Text>
+        }
       </View>
       <LineMark />
     </View>
   </View>
+}
+
+function isWeapon(equipment: Weapon | Armor): equipment is Weapon {
+  return (equipment as Weapon).damage !== undefined;
 }
 
 const style = StyleSheet.create({
@@ -106,7 +103,7 @@ const style = StyleSheet.create({
 
   safe_area: {
     flex: 1,
-    paddingTop: 65,
+    paddingTop: Platform.OS === "android" ? 56 : 0,
     justifyContent: "center",
     alignItems: "center"
   },

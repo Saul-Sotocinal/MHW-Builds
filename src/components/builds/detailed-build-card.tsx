@@ -8,7 +8,7 @@ import { Title } from "../decorative/title"
 export function DetailedCard({ item }: { item: Build }) {
   return <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: item.id } }}>
     <View style={style.item}>
-      <Title title={item.name} width={130} bgColor='rgba(255, 234, 172, 0.7)' />
+      <Title title={item.name} width={130} bgColor='#b93f32' decoColor='#dac342'/>
 
       <View>
         <EquipmentCard type={item.weapon.type} name={item.weapon.name} />

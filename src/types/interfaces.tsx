@@ -22,3 +22,8 @@ export interface Armor {
   type: string;
   defense: number;
 }
+
+export interface ChosenEquipmentType {
+  type: string,
+  index: number
+}

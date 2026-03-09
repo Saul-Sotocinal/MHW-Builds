@@ -2,20 +2,21 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { LineMark } from './line-mark';
 import { TextStroke } from './text-stroke';
 
-export function Title({ title, width, bgColor }: { title: string, width: number, bgColor: string }) {
+export function Title({ title, width, bgColor, decoColor }: 
+  { title: string, width: number, bgColor: string, decoColor: string}) {
   const TITLE_BORDER = require('@assets/ui_elements/title_border.png')
 
   return <View>
   <LineMark/>
   <View style={[style.container, {backgroundColor: bgColor}]}>
-    <Image source={TITLE_BORDER} style={style.decoration} resizeMode='stretch'></Image>
+    <Image source={TITLE_BORDER} style={[style.decoration, {tintColor: decoColor}]} resizeMode='stretch'></Image>
       <View style={{width: width}}></View>
       <View style={style.textWrapper}>
         <TextStroke stroke={1} color='#000'>
           <Text style={style.text}>{title}</Text>
         </TextStroke>
       </View>
-    <Image source={TITLE_BORDER} style={[style.decoration, style.decoRight]} resizeMode='stretch'></Image>
+    <Image source={TITLE_BORDER} style={[style.decoration, style.decoRight, {tintColor: decoColor}]} resizeMode='stretch'></Image>
   </View>
   <LineMark/>
 </View>
@@ -51,7 +52,7 @@ export const style = StyleSheet.create({
 
     decoration: {
         width: 100,
-        height: 35,
+        height: 35
     },
 
     decoRight: {

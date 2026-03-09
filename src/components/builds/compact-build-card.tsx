@@ -12,7 +12,7 @@ export function CompactCard({ item }: { item: Build }) {
       <EquipmentIcon type={item.weapon.type} size={70}/>
 
       <View style={style.details}>
-        <Title title={item.name} width={30} bgColor='rgba(255, 234, 172, 0.7)' />
+        <Title title={item.name} width={30} bgColor='rgba(255, 234, 172, 0.7)' decoColor='#854305'/>
 
         <View style={style.stats}>
           <View style={style.damage}>
