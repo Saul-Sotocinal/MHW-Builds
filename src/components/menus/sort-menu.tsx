@@ -1,8 +1,11 @@
-import { Build } from '@/types/interfaces';
+import { BuildsContext } from '@/data/builds-context';
+import { useContext } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
-export function SortMenu({ display, builds, setBuilds }:
-  { display: boolean, builds: Build[], setBuilds: React.Dispatch<React.SetStateAction<Build[]>> }) {
+export function SortMenu({ display }:
+  { display: boolean }) {
+  const { builds, setBuilds } = useContext(BuildsContext)!;
+
   return (
     <View style={[{ display: display ? "flex" : "none" }, style.menu]}>
       <Button

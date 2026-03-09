@@ -1,7 +1,8 @@
+import { BuildsContext } from '@/data/builds-context';
 import { BUILDS_TEMPLATE, EQUIPMENT_ICONS } from '@/data/data';
 import { Build } from '@/types/interfaces';
 import { Checkbox } from 'expo-checkbox';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, FlatList, Image, StyleSheet, View } from 'react-native';
 
 const INITIAL_ITEMS: FilterItem[] = [
@@ -21,8 +22,9 @@ const INITIAL_ITEMS: FilterItem[] = [
   { id: '14', type: 'bow', selected: true }
 ]
 
-export function FilterMenu({ display, builds, setBuilds }:
-  { display: boolean, builds: Build[], setBuilds: React.Dispatch<React.SetStateAction<Build[]>> }) {
+export function FilterMenu({ display }:
+  { display: boolean }) {
+  const {builds, setBuilds} = useContext(BuildsContext)!;
   const [items, setItems] = useState<FilterItem[]>(INITIAL_ITEMS)
 
   const renderItem = ({ item }: { item: FilterItem }) => (

@@ -1,4 +1,3 @@
-import { Build } from '@/types/interfaces';
 import { useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { FilterMenu } from '../menus/filter-menu';
@@ -33,8 +32,8 @@ export function BottomBar({ props }: { props: BottomBarProps }) {
       <Button title='FILTER' onPress={showFilters}></Button>
       <Button title='DISPLAY' onPress={changeDisplay}></Button>
 
-      <FilterMenu display={filter} builds={props.builds} setBuilds={props.setBuilds}/>
-      <SortMenu display={sort} builds={props.builds} setBuilds={props.setBuilds}/>
+      <FilterMenu display={filter} />
+      <SortMenu display={sort} />
     </View>
 
     <TextInput placeholder="Search Name (will be implemented later)" />
@@ -43,9 +42,7 @@ export function BottomBar({ props }: { props: BottomBarProps }) {
 
 interface BottomBarProps {
   viewMode: "list" | "card",
-  setViewMode: React.Dispatch<React.SetStateAction<"list" | "card">>,
-  builds: Build[], 
-  setBuilds: React.Dispatch<React.SetStateAction<Build[]>> 
+  setViewMode: React.Dispatch<React.SetStateAction<"list" | "card">>
 }
 
 const style = StyleSheet.create({
