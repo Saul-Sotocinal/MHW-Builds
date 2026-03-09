@@ -1,4 +1,4 @@
-import { BuildList } from '@/components/cards/build-list';
+import { BuildList } from '@/components/builds/build-list';
 import { BottomBar } from '@/components/menus/bottom-bar';
 import { BUILDS_TEMPLATE } from '@/data/data';
 import { Build } from '@/types/interfaces';
@@ -12,7 +12,7 @@ export default function Builds() {
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
   return (
-    <ImageBackground source={BACKGROUND_IMAGE} style={{ flex: 1, justifyContent: 'center' }} resizeMode='stretch'>
+    <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
       <SafeAreaProvider>
         <SafeAreaView style={style.safe_area}>
           <BuildList builds={builds} view={viewMode} />
@@ -27,6 +27,11 @@ export default function Builds() {
 
 export const style = StyleSheet.create({
   safe_area: {
-    flex: 1
+    flex: 1,
+    paddingTop: 56
+  },
+
+  background: {
+    flex: 1, justifyContent: 'center' 
   }
 });

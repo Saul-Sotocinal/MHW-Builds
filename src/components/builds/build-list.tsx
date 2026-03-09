@@ -1,7 +1,7 @@
 import { Build } from '@/types/interfaces';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { CompactCard } from './compact-card';
-import { DetailedCard } from './detailed-card';
+import { CompactCard } from './compact-build-card';
+import { DetailedCard } from './detailed-build-card';
 
 export function BuildList({ builds, view }: { builds: Build[], view: "list" | "card" }) {
   return <View style={style.list}>

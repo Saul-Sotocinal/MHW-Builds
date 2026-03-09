@@ -1,43 +1,43 @@
+import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
 
 export default function Layout() {
   return (
     <Drawer screenOptions={{
-      headerStyle: {
-        backgroundColor: "transparent",
-      },
-      headerTransparent: true
+      headerStyle: { backgroundColor: "#FFFFFF55"},
+      headerTransparent: true,
+      headerLeft: () => <DrawerToggleButton/>
     }}>
       <Drawer.Screen
-        name="(drawer)/builds/index" // This is the name of the page and must match the url from root
+        name="builds"
         options={{
           drawerLabel: 'Builds',
-          title: 'overview',
+          headerShown: false
         }}
       />
       <Drawer.Screen
-        name="(drawer)/monsters" // This is the name of the page and must match the url from root
+        name="monsters"
         options={{
           drawerLabel: 'Monsters',
           title: 'overview',
         }}
       />
       <Drawer.Screen
-        name="(drawer)/hunters" // This is the name of the page and must match the url from root
+        name="hunters"
         options={{
           drawerLabel: 'Hunters',
           title: 'overview',
         }}
       />
       <Drawer.Screen
-        name="(drawer)/map" // This is the name of the page and must match the url from root
+        name="map" 
         options={{
           drawerLabel: 'Map',
           title: 'overview',
         }}
       />
       <Drawer.Screen
-        name="(drawer)/profile" // This is the name of the page and must match the url from root
+        name="profile"
         options={{
           drawerLabel: 'Profile',
           title: 'overview',

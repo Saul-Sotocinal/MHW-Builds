@@ -1,39 +1,42 @@
 import { ELEMENT_ICONS, EQUIPMENT_ICONS } from "@/data/data"
 import { Build } from "@/types/interfaces"
+import { Link } from "expo-router"
 import { Image, StyleSheet, Text, View } from "react-native"
 import { LineMark } from "../decorative/line-mark"
 import { Title } from "../decorative/title"
 
 export function DetailedCard({ item }: { item: Build }) {
-  return <View style={style.item}>
-    <Title title={item.name} width={130} bgColor='rgba(255, 234, 172, 0.7)' />
+  return <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: item.id } }}>
+    <View style={style.item}>
+      <Title title={item.name} width={130} bgColor='rgba(255, 234, 172, 0.7)' />
 
-    <View>
-      <EquipmentCard type={item.weapon.type} name={item.weapon.name} />
-      <EquipmentCard type={item.helm.type} name={item.helm.name} />
-      <EquipmentCard type={item.chest.type} name={item.chest.name} />
-      <EquipmentCard type={item.gloves.type} name={item.gloves.name} />
-      <EquipmentCard type={item.waist.type} name={item.waist.name} />
-      <EquipmentCard type={item.legs.type} name={item.legs.name} />
-      <EquipmentCard type={item.talisman.type} name={item.talisman.name} />
-    </View>
-
-    <View style={style.stats}>
-      <View style={style.attack}>
-        <Text style={style.stats_details}>{item.weapon.damage} ATK</Text>
-        <Image source={ELEMENT_ICONS[item.weapon.element]} style={style.element} />
+      <View>
+        <EquipmentCard type={item.weapon.type} name={item.weapon.name} />
+        <EquipmentCard type={item.helm.type} name={item.helm.name} />
+        <EquipmentCard type={item.chest.type} name={item.chest.name} />
+        <EquipmentCard type={item.gloves.type} name={item.gloves.name} />
+        <EquipmentCard type={item.waist.type} name={item.waist.name} />
+        <EquipmentCard type={item.legs.type} name={item.legs.name} />
+        <EquipmentCard type={item.talisman.type} name={item.talisman.name} />
       </View>
-      <Text style={style.stats_details}>{
-        item.helm.defense +
-        item.chest.defense +
-        item.gloves.defense +
-        item.waist.defense +
-        item.legs.defense
-      } DEF
-      </Text>
+
+      <View style={style.stats}>
+        <View style={style.attack}>
+          <Text style={style.stats_details}>{item.weapon.damage} ATK</Text>
+          <Image source={ELEMENT_ICONS[item.weapon.element]} style={style.element} />
+        </View>
+        <Text style={style.stats_details}>{
+          item.helm.defense +
+          item.chest.defense +
+          item.gloves.defense +
+          item.waist.defense +
+          item.legs.defense
+        } DEF
+        </Text>
+      </View>
+      <LineMark />
     </View>
-    <LineMark />
-  </View>
+  </Link>
 }
 
 function EquipmentCard({ type, name }: { type: string, name: string }) {
@@ -47,6 +50,10 @@ function EquipmentCard({ type, name }: { type: string, name: string }) {
 }
 
 const style = StyleSheet.create({
+  link: {
+    margin: 10,
+  },
+
   item: {
     backgroundColor: 'rgba(251, 231, 177, 0.7)',
     borderWidth: 2,
