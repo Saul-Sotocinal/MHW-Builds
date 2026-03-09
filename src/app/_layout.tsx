@@ -9,35 +9,35 @@ export default function Layout() {
       headerLeft: () => <DrawerToggleButton/>
     }}>
       <Drawer.Screen
-        name="builds"
+        name="(drawer)/builds"
         options={{
           drawerLabel: 'Builds',
           headerShown: false
         }}
       />
       <Drawer.Screen
-        name="monsters"
+        name="(drawer)/monsters"
         options={{
           drawerLabel: 'Monsters',
           title: 'overview',
         }}
       />
       <Drawer.Screen
-        name="hunters"
+        name="(drawer)/hunters"
         options={{
           drawerLabel: 'Hunters',
           title: 'overview',
         }}
       />
       <Drawer.Screen
-        name="map" 
+        name="(drawer)/map" 
         options={{
           drawerLabel: 'Map',
           title: 'overview',
         }}
       />
       <Drawer.Screen
-        name="profile"
+        name="(drawer)/profile"
         options={{
           drawerLabel: 'Profile',
           title: 'overview',

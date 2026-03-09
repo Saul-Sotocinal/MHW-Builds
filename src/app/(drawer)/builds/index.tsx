@@ -3,7 +3,7 @@ import { BottomBar } from '@/components/menus/bottom-bar';
 import { BUILDS_TEMPLATE } from '@/data/data';
 import { Build } from '@/types/interfaces';
 import { useState } from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, Platform, StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Builds() {
@@ -28,7 +28,7 @@ export default function Builds() {
 export const style = StyleSheet.create({
   safe_area: {
     flex: 1,
-    paddingTop: 56
+    paddingTop: Platform.OS === "android" ? 56 : 0
   },
 
   background: {
