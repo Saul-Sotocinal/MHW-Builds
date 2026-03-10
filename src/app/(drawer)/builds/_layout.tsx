@@ -9,11 +9,11 @@ export default function Layout() {
     }}>
       <Stack.Screen
         name="index"
-        options={{ headerLeft: () => <DrawerToggleButton /> }}
+        options={{ headerLeft: () => <DrawerToggleButton />, title: "Builds" }}
       />
       <Stack.Screen
         name="[id]"
-        options={{ title: "Set" }}
+        options={{ title: "Build Details" }}
       />
     </Stack>
   )
