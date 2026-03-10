@@ -7,8 +7,8 @@
  */
 
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
 import { Children, cloneElement, isValidElement } from "react";
+import { StyleSheet, View } from "react-native";
 
 type Props = {
   children: any,
@@ -17,7 +17,8 @@ type Props = {
 }
 const styles = StyleSheet.create({
   outline: {
-    position: 'absolute'
+    position: 'absolute',
+    flexWrap: 'nowrap'
   },
 });
 

@@ -74,7 +74,7 @@ export function SortMenu({ display }:
 const style = StyleSheet.create({
   menu: {
     position: 'absolute',
-    bottom: 40,
+    bottom: 80,
     backgroundColor: 'rgba(34, 34, 34, 0.8)',
     width: '100%',
     padding: 5,

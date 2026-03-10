@@ -70,7 +70,9 @@ export function FilterMenu({ display }:
       <FlatList
         data={items}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}></FlatList>
+        keyExtractor={(item) => item.id}
+        numColumns={3}
+        />
       <Button
         title="Reset"
         onPress={() => {
@@ -91,10 +93,11 @@ interface FilterItem {
 const style = StyleSheet.create({
   menu: {
     position: "absolute",
-    bottom: 40,
+    bottom: 80,
     backgroundColor: 'rgba(34, 34, 34, 0.8)',
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
+    padding: 10
   },
 
   item: {
@@ -105,6 +108,5 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    width: "100%",
   }
 })

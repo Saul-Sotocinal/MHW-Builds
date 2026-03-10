@@ -1,19 +1,35 @@
-import { useState } from 'react';
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { BuildsContext } from '@/data/builds-context';
+import { DEFAULT_BUILD } from '@/data/data';
+import { Build } from '@/types/interfaces';
+import { useContext, useState } from 'react';
+import { Button, FlatList, StyleSheet, View } from 'react-native';
 import { FilterMenu } from '../menus/filter-menu';
 import { SortMenu } from '../menus/sort-menu';
 
-export function BottomBar({ props }: { props: BottomBarProps }) {
+export function BottomBar({ viewMode, setViewMode, flatListRef }: {
+  viewMode: "list" | "card",
+  setViewMode: React.Dispatch<React.SetStateAction<"list" | "card">>
+  flatListRef: FlatList<Build> | null
+}) {
   const [filter, setFilter] = useState(false)
   const [sort, setSort] = useState(false)
+  const { builds, setBuilds } = useContext(BuildsContext)!;
 
   function changeDisplay() {
-    if (props.viewMode === "list") {
-      props.setViewMode("card")
+    if (viewMode === "list") {
+      setViewMode("card")
     }
     else {
-      props.setViewMode("list")
+      setViewMode("list")
     }
+  }
+
+  function createBuild() {
+    const newBuild = { ...DEFAULT_BUILD }
+    newBuild.id = (builds.length + 1).toString()
+    builds.push(newBuild)
+    setBuilds([...builds])
+    flatListRef!.scrollToEnd()
   }
 
   function showFilters() {
@@ -28,15 +44,22 @@ export function BottomBar({ props }: { props: BottomBarProps }) {
 
   return <View style={style.bottom_bar}>
     <View style={style.bottom_bar_buttons}>
-      <Button title='SORT' onPress={showSorting}></Button>
-      <Button title='FILTER' onPress={showFilters}></Button>
-      <Button title='DISPLAY' onPress={changeDisplay}></Button>
+      <View style={style.row}>
+        <Button title='SORT' onPress={showSorting} />
+        <Button title='FILTER' onPress={showFilters} />
+      </View>
+
+      <View style={style.row}>
+        <Button title='CREATE' onPress={() => {
+          createBuild()
+
+        }} />
+        <Button title='DISPLAY' onPress={changeDisplay} />
+      </View>
 
       <FilterMenu display={filter} />
       <SortMenu display={sort} />
     </View>
-
-    <TextInput placeholder="Search Name (will be implemented later)" />
   </View>
 }
 
@@ -50,11 +73,14 @@ const style = StyleSheet.create({
     margin: 20
   },
 
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+
   bottom_bar_buttons: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginLeft: 50,
-    marginRight: 50
+    gap: 10
   }
 });

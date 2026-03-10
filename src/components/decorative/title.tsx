@@ -7,7 +7,7 @@ export function Title({ title, width, bgColor, decoColor }:
   const TITLE_BORDER = require('@assets/ui_elements/title_border.png')
 
   return <View>
-  <LineMark/>
+  <LineMark props={{tint: decoColor}}/>
   <View style={[style.container, {backgroundColor: bgColor}]}>
     <Image source={TITLE_BORDER} style={[style.decoration, {tintColor: decoColor}]} resizeMode='stretch'></Image>
       <View style={{width: width}}></View>
@@ -18,7 +18,7 @@ export function Title({ title, width, bgColor, decoColor }:
       </View>
     <Image source={TITLE_BORDER} style={[style.decoration, style.decoRight, {tintColor: decoColor}]} resizeMode='stretch'></Image>
   </View>
-  <LineMark/>
+  <LineMark props={{tint: decoColor}}/>
 </View>
 }
 

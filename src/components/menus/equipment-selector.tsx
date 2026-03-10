@@ -16,7 +16,7 @@ export function EquipmentSelector({ build, props, setSelector }:
       changeEquipment(item, item.type, build);
 
       setSelector({isShown: false});
-      setBuilds(builds);
+      setBuilds([...builds]);
     }}>
       <Image style={style.equipment_icon} source={EQUIPMENT_ICONS[item.type]} />
       <Text>{item.name}</Text>
@@ -28,8 +28,7 @@ export function EquipmentSelector({ build, props, setSelector }:
 
   let items;
   if (isWeapon(props.equipment!))
-    // have to make it show all the weapons
-    items = AVAILABLE_WEAPONS.filter((w) => w.type === props.equipment?.type)
+    items = AVAILABLE_WEAPONS
   else
     items = AVAILABLE_ARMORS.filter((a) => a.type === props.equipment?.type)
 
@@ -85,10 +84,13 @@ interface EquipmentSelectorProps {
 const style = StyleSheet.create({
   menu: {
     position: "absolute",
+    alignSelf: "center",
     bottom: 40,
     backgroundColor: 'rgba(34, 34, 34, 0.8)',
-    width: "100%",
-    alignItems: "center"
+    alignItems: "center",
+    width: 250,
+    height: 300,
+    padding: 10
   },
 
   item: {
