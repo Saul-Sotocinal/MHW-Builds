@@ -11,19 +11,25 @@ export interface Build {
 }
 
 export interface Weapon {
+  id: number
   name: string;
-  type: string;
-  element: string;
+  type: "greatsword" | "longsword" | "sword_and_shield" | "dual_blades" 
+    | "hammer" | "hunting_horn" | "lance" | "gunlance" | "switch_axe" 
+    | "charge_blade" | "insect_glaive" | "light_bowgun" | "heavy_bowgun" | "bow";
+
+  element: "blast" | "dragon" | "fire" | "ice" | "paralysis" 
+    | "poison" | "raw" | "sleep" | "thunder" | "water";
+    
   damage: number;
 }
 
 export interface Armor {
+  id: number;
   name: string;
-  type: string;
+  type: "helm" | "chest" | "gloves" | "waist" | "legs" | "talisman";
   defense: number;
 }
 
-export interface ChosenEquipmentType {
-  type: string,
-  index: number
+export function isWeapon(equipment: Weapon | Armor): equipment is Weapon {
+  return (equipment as Weapon).damage !== undefined;
 }

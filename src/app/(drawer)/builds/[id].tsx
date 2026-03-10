@@ -1,17 +1,21 @@
 import { EquipmentIcon } from "@/components/decorative/equipment-icon";
 import { LineMark } from "@/components/decorative/line-mark";
 import { Title } from "@/components/decorative/title";
+import { EquipmentSelector } from "@/components/menus/equipment-selector";
 import { BuildsContext } from "@/data/builds-context";
 import { ELEMENT_ICONS } from "@/data/data";
-import { Armor, Weapon } from "@/types/interfaces";
+import { Armor, isWeapon, Weapon } from "@/types/interfaces";
 import { useLocalSearchParams } from "expo-router";
-import { useContext } from "react";
-import { Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Image, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function BuildDetailScreen() {
-  const {builds, setBuilds} = useContext(BuildsContext)!;
+  const { builds, setBuilds } = useContext(BuildsContext)!;
+  const [selector, setSelector] =
+    useState<{ isShown: boolean, equipment?: Weapon | Armor }>({ isShown: false });
+
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -29,6 +33,7 @@ export default function BuildDetailScreen() {
     );
   }
 
+  const buildIndex = builds.indexOf(build);
   return (
     <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
       <SafeAreaProvider>
@@ -36,16 +41,16 @@ export default function BuildDetailScreen() {
           <View>
             <ScrollView>
               <View style={style.build}>
-                <Title title={build.name} width={130} bgColor='#b93f32' decoColor='#dac342'/>
+                <Title title={build.name} width={130} bgColor='#b93f32' decoColor='#dac342' />
 
                 <View>
-                  <EquipmentCard equipment={build.weapon} />
-                  <EquipmentCard equipment={build.helm} />
-                  <EquipmentCard equipment={build.chest} />
-                  <EquipmentCard equipment={build.gloves} />
-                  <EquipmentCard equipment={build.waist} />
-                  <EquipmentCard equipment={build.legs} />
-                  <EquipmentCard equipment={build.talisman} />
+                  <EquipmentCard equipment={build.weapon} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.helm} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.chest} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.gloves} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.waist} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.legs} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.talisman} setSelector={setSelector} />
                 </View>
 
                 <View style={style.stats}>
@@ -65,6 +70,8 @@ export default function BuildDetailScreen() {
                 <LineMark />
               </View>
             </ScrollView>
+
+            <EquipmentSelector build={build} props={selector} setSelector={setSelector} />
           </View>
         </SafeAreaView>
       </SafeAreaProvider>
@@ -72,8 +79,19 @@ export default function BuildDetailScreen() {
   );
 }
 
-function EquipmentCard({ equipment }: { equipment: Weapon | Armor }) {
-  return <View style={card_style.item} >
+function EquipmentCard({ equipment, setSelector }
+  : {
+    equipment: Weapon | Armor; setSelector: Dispatch<SetStateAction<{
+      isShown: boolean;
+      equipment?: Weapon | Armor;
+    }>>
+  }) {
+  return <Pressable style={card_style.item} onPress={() => {
+    setSelector({
+      isShown: true,
+      equipment: equipment
+    })
+  }}>
     <EquipmentIcon type={equipment.type} size={70} />
 
     <View style={card_style.details}>
@@ -91,11 +109,7 @@ function EquipmentCard({ equipment }: { equipment: Weapon | Armor }) {
       </View>
       <LineMark />
     </View>
-  </View>
-}
-
-function isWeapon(equipment: Weapon | Armor): equipment is Weapon {
-  return (equipment as Weapon).damage !== undefined;
+  </Pressable>
 }
 
 const style = StyleSheet.create({
@@ -193,3 +207,11 @@ const card_style = StyleSheet.create({
     fontWeight: 600
   }
 });
+
+const equipment_selector_style = StyleSheet.create({
+  selector: {
+    position: 'absolute',
+    bottom: 100,
+    left: 0
+  }
+})
