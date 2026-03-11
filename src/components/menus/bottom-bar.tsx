@@ -27,7 +27,17 @@ export function BottomBar({ viewMode, setViewMode, flatListRef }: {
 
   function createBuild() {
     const newBuild = { ...DEFAULT_BUILD }
-    newBuild.id = (builds.length + 1).toString()
+    
+    if (builds.length > 0) {
+      const sortedBuilds = builds.sort((a, b) => {
+        if (parseInt(a.id) > parseInt(b.id)) return 1;
+        if (parseInt(a.id) < parseInt(b.id)) return -1;
+        return 0;
+      });
+
+      newBuild.id = (parseInt(sortedBuilds[builds.length - 1].id) + 1).toString()
+    }
+
     builds.push(newBuild)
     setBuilds([...builds])
     flatListRef!.scrollToEnd()

@@ -1,3 +1,4 @@
+import { color } from '@/data/color-scheme';
 import { ELEMENT_ICONS } from '@/data/data';
 import { Build } from "@/types/interfaces";
 import { Link } from 'expo-router';
@@ -6,27 +7,27 @@ import { EquipmentIcon } from '../decorative/equipment-icon';
 import { LineMark } from "../decorative/line-mark";
 import { Title } from "../decorative/title";
 
-export function CompactCard({ item }: { item: Build }) {
+export function CompactCard({ item: build }: { item: Build }) {
   return (
-    <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: item.id } }}>
+    <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: build.id } }}>
       <View style={style.item} >
-        <EquipmentIcon type={item.weapon.type} size={70} />
+        <EquipmentIcon type={build.weapon.type} size={70} />
 
         <View style={style.details}>
-          <Title title={item.name} props={{width:30}} />
+          <Title title={build.name} props={{width:30}} />
 
           <View style={style.stats}>
             <View style={style.damage}>
-              <Text style={style.text}>{item.weapon.damage} DMG</Text>
-              <Image source={ELEMENT_ICONS[item.weapon.element]} style={style.element} />
+              <Text style={style.text}>{build.weapon.damage} DMG</Text>
+              <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
             </View>
 
             <Text style={style.text}>{
-              item.helm.defense +
-              item.chest.defense +
-              item.gloves.defense +
-              item.waist.defense +
-              item.legs.defense
+              build.helm.defense +
+              build.chest.defense +
+              build.gloves.defense +
+              build.waist.defense +
+              build.legs.defense
             } DEF
             </Text>
           </View>
@@ -43,7 +44,7 @@ const style = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: 'rgba(251, 231, 177, 0.7)',
+    backgroundColor: color.Card,
     borderColor: 'rgb(133, 67, 5)',
     justifyContent: "space-between",
     borderWidth: 2,

@@ -1,13 +1,13 @@
 export const color: colorScheme = {
     // GENERAL
-    Card: '#fbe7b1b3',
-    Title: '#ffeaacb3',
+    Card: '#fbe7b1db',
+    Title: '#e6ce84b3',
     InfoBG: '#fff9e980',
     Pencil: '#854305',
     Text: '#5c320d',
 
     // Title Cards
-    RedCard: '#97403a',
+    RedCard: '#813833',
     RedDeco: '#dac342',
 }
 

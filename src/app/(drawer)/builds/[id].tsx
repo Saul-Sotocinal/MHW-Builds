@@ -1,4 +1,5 @@
 import { EquipmentIcon } from "@/components/decorative/equipment-icon";
+import { Label } from "@/components/decorative/label";
 import { LineMark } from "@/components/decorative/line-mark";
 import { Title } from "@/components/decorative/title";
 import { EquipmentSelector } from "@/components/menus/equipment-selector";
@@ -6,21 +7,38 @@ import { BuildsContext } from "@/data/builds-context";
 import { color } from "@/data/color-scheme";
 import { ELEMENT_ICONS } from "@/data/data";
 import { Armor, isWeapon, Weapon } from "@/types/interfaces";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
-import { Image, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function BuildDetailScreen() {
   const { builds, setBuilds } = useContext(BuildsContext)!;
-  const [selector, setSelector] =
-    useState<{ isShown: boolean, equipment?: Weapon | Armor }>({ isShown: false });
-
-  const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
-
+  const [selector, setSelector] = useState<{ isShown: boolean, equipment?: Weapon | Armor }>({ isShown: false });
   const { id } = useLocalSearchParams<{ id: string }>();
   const build = builds.find((b) => b.id === id);
+  const router = useRouter();
+  const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
+
+  function deleteBuild() {
+    Alert.alert("Confirm Deletion", "Are you sure you want to proceed?", [
+      {
+        text: "Cancel",
+        style: "cancel"
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          if (build)
+            builds.splice(builds.indexOf(build), 1)
+          setBuilds([...builds])
+          router.back();
+        }
+      }
+    ])
+
+  }
 
   if (!build) {
     return (
@@ -34,7 +52,6 @@ export default function BuildDetailScreen() {
     );
   }
 
-  const buildIndex = builds.indexOf(build);
   return (
     <ImageBackground source={BACKGROUND_IMAGE} style={style.background} resizeMode='stretch'>
       <SafeAreaProvider>
@@ -43,7 +60,7 @@ export default function BuildDetailScreen() {
             <ScrollView>
               <View style={style.build}>
 
-                <Title title={build.name} renameId={build.id} props={{width:130, bgColor: color.RedCard, decoColor: color.RedDeco}} />
+                <Title title={build.name} renameId={build.id} props={{ width: 130, bgColor: color.RedCard, decoColor: color.RedDeco }} />
 
                 <View>
                   <EquipmentCard equipment={build.weapon} setSelector={setSelector} />
@@ -70,6 +87,9 @@ export default function BuildDetailScreen() {
                   </Text>
                 </View>
                 <LineMark />
+                <Pressable onPress={deleteBuild} style={style.delete_button}>
+                  <Label title='DELETE ' color='Red' props={{ width: 160 }} />
+                </Pressable>
               </View>
             </ScrollView>
 
@@ -80,6 +100,8 @@ export default function BuildDetailScreen() {
     </ImageBackground>
   );
 }
+
+
 
 function EquipmentCard({ equipment, setSelector }
   : {
@@ -94,7 +116,7 @@ function EquipmentCard({ equipment, setSelector }
     <EquipmentIcon type={equipment.type} size={70} />
 
     <View style={card_style.details}>
-      <Title title={equipment.name} props={{width:13}} />
+      <Title title={equipment.name} props={{ width: 13 }} />
 
       <View style={card_style.stats}>
         {isWeapon(equipment) ?
@@ -131,7 +153,8 @@ const style = StyleSheet.create({
     display: "flex",
     width: 350,
     margin: 10,
-    padding: 10
+    padding: 10,
+    alignItems: 'center'
   },
 
   stats: {
@@ -141,7 +164,8 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: color.InfoBG,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    width: '100%'
   },
 
   stats_details: {
@@ -158,6 +182,10 @@ const style = StyleSheet.create({
   element: {
     height: 30,
     width: 30,
+  },
+
+  delete_button: {
+    marginTop: 10
   }
 });
 

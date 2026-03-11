@@ -79,10 +79,10 @@ const style = StyleSheet.create({
     backgroundColor: 'rgba(34, 34, 34, 0.8)',
     position: 'absolute',
     alignItems: 'center',
-    bottom: 80,
+    bottom: 100,
     width: '100%',
     padding: 5,
-    gap: 5,
+    gap: 5
   },
 
   top: {

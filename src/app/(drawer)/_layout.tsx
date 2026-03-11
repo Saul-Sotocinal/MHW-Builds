@@ -21,28 +21,28 @@ export default function Layout() {
           name="monsters"
           options={{
             drawerLabel: 'Monsters',
-            title: 'Monsters',
+            title: 'Monsters(Unfinished)',
           }}
         />
         <Drawer.Screen
           name="hunters"
           options={{
             drawerLabel: 'Hunters',
-            title: 'Hunters',
+            title: 'Hunters(Unimplemented)',
           }}
         />
         <Drawer.Screen
           name="map"
           options={{
             drawerLabel: 'Map',
-            title: 'Map',
+            title: 'Map(Unimplemented)',
           }}
         />
         <Drawer.Screen
           name="profile"
           options={{
             drawerLabel: 'Profile',
-            title: 'Profile',
+            title: 'Profile(Unimplemented)',
           }}
         />
       </Drawer>

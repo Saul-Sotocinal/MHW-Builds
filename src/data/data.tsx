@@ -122,7 +122,7 @@ export const AVAILABLE_WEAPONS: Weapon[] = [
 
 
 export const DEFAULT_BUILD: Build = {
-  id: "-1",
+  id: "0",
   name: "New Build",
   weapon: { ...AVAILABLE_WEAPONS[4] },
   helm: { ...AVAILABLE_ARMORS[0] },
@@ -223,3 +223,4 @@ export const BUILDS_TEMPLATE: Build[] = [
     talisman: { ...AVAILABLE_ARMORS[25] },
   },
 ];
+

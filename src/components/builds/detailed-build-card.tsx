@@ -6,32 +6,32 @@ import { Image, StyleSheet, Text, View } from "react-native"
 import { LineMark } from "../decorative/line-mark"
 import { Title } from "../decorative/title"
 
-export function DetailedCard({ item }: { item: Build }) {
-  return <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: item.id } }}>
+export function DetailedCard({ item: build }: { item: Build }) {
+  return <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: build.id } }}>
     <View style={style.item}>
-      <Title title={item.name} props={{width:130, bgColor: color.RedCard, decoColor: color.RedDeco}}/>
+      <Title title={build.name} props={{width:130, bgColor: color.RedCard, decoColor: color.RedDeco}}/>
 
       <View>
-        <EquipmentCard type={item.weapon.type} name={item.weapon.name} />
-        <EquipmentCard type={item.helm.type} name={item.helm.name} />
-        <EquipmentCard type={item.chest.type} name={item.chest.name} />
-        <EquipmentCard type={item.gloves.type} name={item.gloves.name} />
-        <EquipmentCard type={item.waist.type} name={item.waist.name} />
-        <EquipmentCard type={item.legs.type} name={item.legs.name} />
-        <EquipmentCard type={item.talisman.type} name={item.talisman.name} />
+        <EquipmentCard type={build.weapon.type} name={build.weapon.name} />
+        <EquipmentCard type={build.helm.type} name={build.helm.name} />
+        <EquipmentCard type={build.chest.type} name={build.chest.name} />
+        <EquipmentCard type={build.gloves.type} name={build.gloves.name} />
+        <EquipmentCard type={build.waist.type} name={build.waist.name} />
+        <EquipmentCard type={build.legs.type} name={build.legs.name} />
+        <EquipmentCard type={build.talisman.type} name={build.talisman.name} />
       </View>
 
       <View style={style.stats}>
         <View style={style.attack}>
-          <Text style={style.stats_details}>{item.weapon.damage} ATK</Text>
-          <Image source={ELEMENT_ICONS[item.weapon.element]} style={style.element} />
+          <Text style={style.stats_details}>{build.weapon.damage} ATK</Text>
+          <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
         </View>
         <Text style={style.stats_details}>{
-          item.helm.defense +
-          item.chest.defense +
-          item.gloves.defense +
-          item.waist.defense +
-          item.legs.defense
+          build.helm.defense +
+          build.chest.defense +
+          build.gloves.defense +
+          build.waist.defense +
+          build.legs.defense
         } DEF
         </Text>
       </View>

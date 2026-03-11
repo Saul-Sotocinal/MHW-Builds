@@ -11,22 +11,23 @@ export function Title({ title, props, renameId }:
   const {builds, setBuilds} = useContext(BuildsContext)!
   const TITLE_BORDER = require('@assets/ui_elements/title_border.png')
   props = { ...DEFAULT_PROPS, ...props }
+  let widthToAdd = props.width ? props.width : 0;
 
   return <View>
     <LineMark props={{ tint: props.decoColor }} />
     <View style={[style.container, { backgroundColor: props.bgColor }]}>
       <Image source={TITLE_BORDER} style={[style.decoration, { tintColor: props.decoColor }]} resizeMode='stretch'></Image>
       <View style={{ width: props.width }}></View>
-      <View style={style.textWrapper}>
+      <View style={[style.textWrapper, {width: 200 + widthToAdd - 20}]}>
         <TextStroke stroke={1} color='black'>
           {renameId ?
-            <TextInput style={style.text} value={text} onChangeText={(text) => {
+            <TextInput style={style.text} numberOfLines={1} value={text} onChangeText={(text) => {
               setText(text)
               builds.find((build) => build.id === renameId)!.name = text
               setBuilds([...builds]);
             }} />
             :
-            <Text style={style.text}>{title} </Text>
+            <Text style={style.text} numberOfLines={1}>{title} </Text>
           }
         </TextStroke>
       </View>

@@ -93,7 +93,7 @@ interface FilterItem {
 const style = StyleSheet.create({
   menu: {
     position: "absolute",
-    bottom: 80,
+    bottom: 100,
     backgroundColor: 'rgba(34, 34, 34, 0.8)',
     width: "100%",
     alignItems: "center",
