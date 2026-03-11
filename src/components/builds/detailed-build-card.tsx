@@ -1,3 +1,4 @@
+import { color } from "@/data/color-scheme"
 import { ELEMENT_ICONS, EQUIPMENT_ICONS } from "@/data/data"
 import { Build } from "@/types/interfaces"
 import { Link } from "expo-router"
@@ -8,7 +9,7 @@ import { Title } from "../decorative/title"
 export function DetailedCard({ item }: { item: Build }) {
   return <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: item.id } }}>
     <View style={style.item}>
-      <Title title={item.name} width={130} bgColor='#b93f32' decoColor='#dac342'/>
+      <Title title={item.name} props={{width:130, bgColor: color.RedCard, decoColor: color.RedDeco}}/>
 
       <View>
         <EquipmentCard type={item.weapon.type} name={item.weapon.name} />
@@ -55,9 +56,9 @@ const style = StyleSheet.create({
   },
 
   item: {
-    backgroundColor: 'rgba(251, 231, 177, 0.7)',
+    backgroundColor: color.Card,
     borderWidth: 2,
-    borderColor: 'rgb(133, 67, 5)',
+    borderColor: color.Pencil,
     display: "flex",
     width: 350,
     margin: 10,
@@ -69,13 +70,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: 'rgba(255, 249, 233, 0.5)',
+    backgroundColor: color.InfoBG,
     paddingLeft: 10,
     paddingRight: 10
   },
 
   stats_details: {
-    color: 'rgb(92, 50, 13)',
+    color: color.Text,
     fontWeight: 600
   },
 

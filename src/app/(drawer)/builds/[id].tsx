@@ -3,6 +3,7 @@ import { LineMark } from "@/components/decorative/line-mark";
 import { Title } from "@/components/decorative/title";
 import { EquipmentSelector } from "@/components/menus/equipment-selector";
 import { BuildsContext } from "@/data/builds-context";
+import { color } from "@/data/color-scheme";
 import { ELEMENT_ICONS } from "@/data/data";
 import { Armor, isWeapon, Weapon } from "@/types/interfaces";
 import { useLocalSearchParams } from "expo-router";
@@ -41,7 +42,8 @@ export default function BuildDetailScreen() {
           <View>
             <ScrollView>
               <View style={style.build}>
-                <Title title={build.name} width={130} bgColor='#b93f32' decoColor='#dac342' />
+
+                <Title title={build.name} renameId={build.id} props={{width:130, bgColor: color.RedCard, decoColor: color.RedDeco}} />
 
                 <View>
                   <EquipmentCard equipment={build.weapon} setSelector={setSelector} />
@@ -87,15 +89,12 @@ function EquipmentCard({ equipment, setSelector }
     }>>
   }) {
   return <Pressable style={card_style.item} onPress={() => {
-    setSelector({
-      isShown: true,
-      equipment: equipment
-    })
+    setSelector({ isShown: true, equipment: equipment })
   }}>
     <EquipmentIcon type={equipment.type} size={70} />
 
     <View style={card_style.details}>
-      <Title title={equipment.name} width={15} bgColor='rgba(255, 234, 172, 0.7)' decoColor='#854305' />
+      <Title title={equipment.name} props={{width:13}} />
 
       <View style={card_style.stats}>
         {isWeapon(equipment) ?
@@ -126,9 +125,9 @@ const style = StyleSheet.create({
   },
 
   build: {
-    backgroundColor: 'rgba(251, 231, 177, 0.7)',
+    backgroundColor: color.Card,
     borderWidth: 2,
-    borderColor: 'rgb(133, 67, 5)',
+    borderColor: color.Pencil,
     display: "flex",
     width: 350,
     margin: 10,
@@ -140,13 +139,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: 'rgba(255, 249, 233, 0.5)',
+    backgroundColor: color.InfoBG,
     paddingLeft: 10,
     paddingRight: 10
   },
 
   stats_details: {
-    color: 'rgb(92, 50, 13)',
+    color: color.Text,
     fontWeight: 600
   },
 
@@ -207,11 +206,3 @@ const card_style = StyleSheet.create({
     fontWeight: 600
   }
 });
-
-const equipment_selector_style = StyleSheet.create({
-  selector: {
-    position: 'absolute',
-    bottom: 100,
-    left: 0
-  }
-})

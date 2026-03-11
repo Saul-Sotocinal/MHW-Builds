@@ -2,7 +2,8 @@ import { BuildsContext } from '@/data/builds-context';
 import { DEFAULT_BUILD } from '@/data/data';
 import { Build } from '@/types/interfaces';
 import { useContext, useState } from 'react';
-import { Button, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, View } from 'react-native';
+import { Label } from '../decorative/label';
 import { FilterMenu } from '../menus/filter-menu';
 import { SortMenu } from '../menus/sort-menu';
 
@@ -45,16 +46,13 @@ export function BottomBar({ viewMode, setViewMode, flatListRef }: {
   return <View style={style.bottom_bar}>
     <View style={style.bottom_bar_buttons}>
       <View style={style.row}>
-        <Button title='SORT' onPress={showSorting} />
-        <Button title='FILTER' onPress={showFilters} />
+        <Pressable onPress={showSorting}><Label title='SORT ' color='Green' /></Pressable>
+        <Pressable onPress={showFilters}><Label title='FILTER ' color='Green' /></Pressable>
       </View>
 
       <View style={style.row}>
-        <Button title='CREATE' onPress={() => {
-          createBuild()
-
-        }} />
-        <Button title='DISPLAY' onPress={changeDisplay} />
+        <Pressable onPress={createBuild}><Label title='CREATE ' color='Green' /></Pressable>
+        <Pressable onPress={changeDisplay}><Label title='DISPLAY ' color='Green' /></Pressable>
       </View>
 
       <FilterMenu display={filter} />

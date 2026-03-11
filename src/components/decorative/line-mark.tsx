@@ -7,7 +7,7 @@ export function LineMark({ props }: { props?: props }) {
 }
 
 interface props {
-  tint: string
+  tint?: string
 }
 
 export const style = StyleSheet.create({
