@@ -1,11 +1,12 @@
-import { EquipmentIcon } from "@/components/decorative/equipment-icon";
-import { Label } from "@/components/decorative/label";
-import { LineMark } from "@/components/decorative/line-mark";
-import { Title } from "@/components/decorative/title";
-import { EquipmentSelector } from "@/components/menus/equipment-selector";
-import { BuildsContext } from "@/data/builds-context";
+import { EquipmentSelector } from "@/components/builds/build-menus/equipment-selector";
+import { BuildsContext } from "@/components/builds/builds-context";
+import { Label } from "@/components/general/button-label";
+import { Card } from "@/components/general/card";
+import { LineMark } from "@/components/general/line-mark";
+import { Title } from "@/components/general/title";
 import { color } from "@/data/color-scheme";
-import { ELEMENT_ICONS } from "@/data/data";
+import { ELEMENT_ICONS } from "@/data/element_data";
+import { EQUIPMENT_ICONS } from "@/data/equipment_data";
 import { Armor, isWeapon, Weapon } from "@/types/interfaces";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
@@ -59,7 +60,6 @@ export default function BuildDetailScreen() {
           <View>
             <ScrollView>
               <View style={style.build}>
-
                 <Title title={build.name} renameId={build.id} props={{ width: 130, bgColor: color.RedCard, decoColor: color.RedDeco }} />
 
                 <View>
@@ -77,7 +77,7 @@ export default function BuildDetailScreen() {
                     <Text style={style.stats_details}>{build.weapon.damage} ATK</Text>
                     <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
                   </View>
-                  <Text style={style.stats_details}>{
+                  <Text style={style.stats_details}> {
                     build.helm.defense +
                     build.chest.defense +
                     build.gloves.defense +
@@ -87,7 +87,7 @@ export default function BuildDetailScreen() {
                   </Text>
                 </View>
                 <LineMark />
-                <Pressable onPress={deleteBuild} style={style.delete_button}>
+                <Pressable onPress={deleteBuild} style={style.delete_button} >
                   <Label title='DELETE ' color='Red' props={{ width: 160 }} />
                 </Pressable>
               </View>
@@ -101,8 +101,6 @@ export default function BuildDetailScreen() {
   );
 }
 
-
-
 function EquipmentCard({ equipment, setSelector }
   : {
     equipment: Weapon | Armor; setSelector: Dispatch<SetStateAction<{
@@ -110,26 +108,20 @@ function EquipmentCard({ equipment, setSelector }
       equipment?: Weapon | Armor;
     }>>
   }) {
-  return <Pressable style={card_style.item} onPress={() => {
+  return <Pressable onPress={() => {
     setSelector({ isShown: true, equipment: equipment })
   }}>
-    <EquipmentIcon type={equipment.type} size={70} />
+    <Card iconList={EQUIPMENT_ICONS} type={equipment.type} name={equipment.name}>
+      {isWeapon(equipment) ?
+        <View style={card_style.damage}>
+          <Text style={card_style.text}>{equipment.damage} DMG</Text>
+          <Image source={ELEMENT_ICONS[equipment.element]} style={card_style.element} />
+        </View>
+        :
+        <Text style={card_style.text}>{equipment.defense} DEF</Text>
+      }
+    </Card>
 
-    <View style={card_style.details}>
-      <Title title={equipment.name} props={{ width: 13 }} />
-
-      <View style={card_style.stats}>
-        {isWeapon(equipment) ?
-          <View style={card_style.damage}>
-            <Text style={card_style.text}>{equipment.damage} DMG</Text>
-            <Image source={ELEMENT_ICONS[equipment.element]} style={card_style.element} />
-          </View>
-          :
-          <Text style={card_style.text}>{equipment.defense} DEF</Text>
-        }
-      </View>
-      <LineMark />
-    </View>
   </Pressable>
 }
 
@@ -190,33 +182,6 @@ const style = StyleSheet.create({
 });
 
 const card_style = StyleSheet.create({
-  link: {
-    margin: 10,
-  },
-
-  item: {
-    backgroundColor: 'rgba(251, 231, 177, 0.7)',
-    borderColor: 'rgb(133, 67, 5)',
-    justifyContent: "space-between",
-    borderWidth: 2,
-    display: "flex",
-    flexDirection: "row",
-    width: '100%',
-    padding: 10
-  },
-
-  details: {
-    width: '70%',
-  },
-
-  stats: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255, 249, 233, 0.5)',
-    paddingLeft: 10,
-    width: '100%',
-    height: 30
-  },
 
   damage: {
     display: "flex",
@@ -230,7 +195,7 @@ const card_style = StyleSheet.create({
   },
 
   text: {
-    color: 'rgb(92, 50, 13)',
+    color: color.Text,
     fontWeight: 600
   }
 });

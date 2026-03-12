@@ -7,10 +7,16 @@
  * https://stackoverflow.com/questions/69247544/how-to-properly-change-react-context-value
  */
 
-import { BuildsContext } from "@/data/builds-context";
-import { BUILDS_TEMPLATE } from "@/data/data";
+import { BUILDS_TEMPLATE } from "@/data/sample-builds";
 import { Build } from "@/types/interfaces";
-import { ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
+
+export const BuildsContext = createContext<BuildContextType | undefined>(undefined);
+
+interface BuildContextType {
+  builds: Build[],
+  setBuilds: React.Dispatch<React.SetStateAction<Build[]>>
+}
 
 export function BuildsContextProvider({ children }: { children: ReactNode }) {
   const [builds, setBuilds] = useState<Build[]>(BUILDS_TEMPLATE);

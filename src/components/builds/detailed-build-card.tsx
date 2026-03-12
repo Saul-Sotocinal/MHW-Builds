@@ -1,10 +1,11 @@
 import { color } from "@/data/color-scheme"
-import { ELEMENT_ICONS, EQUIPMENT_ICONS } from "@/data/data"
+import { ELEMENT_ICONS } from "@/data/element_data"
+import { EQUIPMENT_ICONS } from "@/data/equipment_data"
 import { Build } from "@/types/interfaces"
 import { Link } from "expo-router"
 import { Image, StyleSheet, Text, View } from "react-native"
-import { LineMark } from "../decorative/line-mark"
-import { Title } from "../decorative/title"
+import { LineMark } from "../general/line-mark"
+import { Title } from "../general/title"
 
 export function DetailedCard({ item: build }: { item: Build }) {
   return <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: build.id } }}>

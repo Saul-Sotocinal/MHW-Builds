@@ -1,5 +1,5 @@
-import { BuildsContext } from "@/data/builds-context";
-import { AVAILABLE_ARMORS, AVAILABLE_WEAPONS, EQUIPMENT_ICONS } from "@/data/data";
+import { BuildsContext } from "@/components/builds/builds-context";
+import { AVAILABLE_ARMORS, AVAILABLE_WEAPONS, EQUIPMENT_ICONS } from "@/data/equipment_data";
 import { Armor, Build, isWeapon, Weapon } from "@/types/interfaces";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";

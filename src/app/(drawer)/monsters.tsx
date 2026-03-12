@@ -1,9 +1,7 @@
-import { LineMark } from '@/components/decorative/line-mark';
-import { MonsterIcon } from '@/components/decorative/monster-icon';
-import { Title } from '@/components/decorative/title';
+import { Card } from '@/components/general/card';
 import { color } from '@/data/color-scheme';
-import { ELEMENT_ICONS } from '@/data/data';
-import { Monster, MONSTERS } from '@/data/monsters_data';
+import { ELEMENT_ICONS } from '@/data/element_data';
+import { Monster, MONSTER_ICONS, MONSTERS } from '@/data/monsters_data';
 import { FlatList, Image, ImageBackground, Platform, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -25,30 +23,14 @@ export default function Monsters() {
   );
 
   function CompactCard({ item: monster }: { item: Monster }) {
-    const words = monster.name.split('_')
-    for (let i = 0; i < words.length; i++)
-      words[i] = words[i][0].toUpperCase() + words[i].substring(1)
-
-    const monsterName = words.join(' ')
-
     return (
       <View style={style.card}>
-        <View style={style.item} >
-          <MonsterIcon type={monster.name} size={70} />
-
-          <View style={style.details}>
-            <Title title={monsterName} props={{ width: 30 }} />
-
-            <View style={style.stats}>
-              <View style={style.damage}>
-                <Text style={style.text}>{monster.type}</Text>
-                <Image source={ELEMENT_ICONS[monster.element]} style={style.element} />
-              </View>
-
-            </View>
-            <LineMark />
+        <Card iconList={MONSTER_ICONS} type={monster.name} name={monster.name} props={{ width: 350 }}>
+          <View style={style.damage}>
+            <Text style={style.text}>{monster.type}</Text>
+            <Image source={ELEMENT_ICONS[monster.element]} style={style.element} />
           </View>
-        </View>
+        </Card>
       </View>
     )
   }
@@ -62,7 +44,7 @@ const style = StyleSheet.create({
   },
 
   card: {
-    margin: 10,
+    margin: 5,
   },
 
   item: {

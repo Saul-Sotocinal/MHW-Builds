@@ -1,5 +1,6 @@
-import { BuildsContext } from '@/data/builds-context';
-import { BUILDS_TEMPLATE, EQUIPMENT_ICONS } from '@/data/data';
+import { BuildsContext } from '@/components/builds/builds-context';
+import { EQUIPMENT_ICONS } from '@/data/equipment_data';
+import { BUILDS_TEMPLATE } from '@/data/sample-builds';
 import { Build } from '@/types/interfaces';
 import { Checkbox } from 'expo-checkbox';
 import { useContext, useState } from 'react';

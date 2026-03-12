@@ -1,11 +1,11 @@
-import { BuildsContext } from '@/data/builds-context';
-import { DEFAULT_BUILD } from '@/data/data';
+import { BuildsContext } from '@/components/builds/builds-context';
+import { DEFAULT_BUILD } from '@/data/equipment_data';
 import { Build } from '@/types/interfaces';
 import { useContext, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
-import { Label } from '../decorative/label';
-import { FilterMenu } from '../menus/filter-menu';
-import { SortMenu } from '../menus/sort-menu';
+import { Label } from '../../general/button-label';
+import { FilterMenu } from './filter-menu';
+import { SortMenu } from './sort-menu';
 
 export function BottomBar({ viewMode, setViewMode, flatListRef }: {
   viewMode: "list" | "card",

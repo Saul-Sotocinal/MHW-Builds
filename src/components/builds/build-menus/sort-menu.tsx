@@ -1,4 +1,4 @@
-import { BuildsContext } from '@/data/builds-context';
+import { BuildsContext } from '@/components/builds/builds-context';
 import { useContext } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 

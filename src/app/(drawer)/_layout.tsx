@@ -1,4 +1,4 @@
-import { BuildsContextProvider } from "@/components/builds/builds-context-provider";
+import { BuildsContextProvider } from "@/components/builds/builds-context";
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
 
