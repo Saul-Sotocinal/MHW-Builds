@@ -1,5 +1,5 @@
-import { EquipmentSelector } from "@/components/builds/build-menus/equipment-selector";
 import { BuildsContext } from "@/components/builds/builds-context";
+import { EquipmentSelector } from "@/components/builds/equipment-selector";
 import { Label } from "@/components/general/button-label";
 import { Card } from "@/components/general/card";
 import { LineMark } from "@/components/general/line-mark";
@@ -33,12 +33,12 @@ export default function BuildDetailScreen() {
         onPress: () => {
           if (build)
             builds.splice(builds.indexOf(build), 1)
+
           setBuilds([...builds])
           router.back();
         }
       }
     ])
-
   }
 
   if (!build) {

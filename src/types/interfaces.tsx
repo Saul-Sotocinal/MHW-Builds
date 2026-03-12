@@ -33,3 +33,9 @@ export interface Armor {
 export function isWeapon(equipment: Weapon | Armor): equipment is Weapon {
   return (equipment as Weapon).damage !== undefined;
 }
+
+export interface FilterItem {
+  id: string,
+  type: string,
+  selected: boolean
+}
