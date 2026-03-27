@@ -1,5 +1,7 @@
 # Project Proposal
 
+## Part 1
+
 ### App Concept
 An app where you can make equipment builds for the game "Monster Hunter World". This would be used by players to keep track of different builds for different situations. Example: A build to use when hunting a specific monster with a specific weapon.
 
@@ -74,3 +76,45 @@ Sorting:
 ### UI Sketches
 Editbuild screen and detailedBuild screen which will look like the card from part 1.
 ![alt text](./assets/readme-diagrams/ui-concept2.png)
+
+## Part 3
+
+###  Data Architecture Plan
+
+##### SQLite Schema
+
+``` sql
+CREATE TABLE IF NOT EXISTS builds (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+    weapon: 
+    helm: 
+    chest: 
+    gloves: 
+    waist: 
+    legs: 
+    charm:
+);
+
+CREATE TABLE IF NOT EXISTS weapons (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    weapon_type TEXT NOT NULL CHECK (element IN ("greatsword" , "longsword" , "sword_and_shield" , "dual_blades", "hammer" , "hunting_horn" , "lance" , "gunlance" , "switch_axe", "charge_blade" , "insect_glaive" , "light_bowgun" , "heavy_bowgun" , "bow")),
+    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder”, "dragon", "water", "ice", "blast", "paralysis”, "poison", "sleep")),
+    attack INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS monsters (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder”, "dragon", "water", "ice", "blast", "paralysis”, "poison", "sleep")),
+    classification TEXT NOT NULL CHECK (classification IN ("bird wyvern" , "brute wyvern" , "fanged wyvern" , "fanged beast", "flying wyvern" , "piscine wyvern" , "relict" , "elder dragon"))
+);
+
+CREATE TABLE IF NOT EXISTS builds_target_monsters (
+    builds_id INTEGER,
+    monster_id INTEGER,
+    FOREIGN KEY(builds_id) REFERENCES builds(id),
+    FOREIGN KEY(monster_id) REFERENCES monsters(id)
+);
+```
