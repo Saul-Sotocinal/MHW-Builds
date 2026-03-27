@@ -1,50 +1,76 @@
-# Welcome to your Expo app 👋
+# Project Proposal
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### App Concept
+An app where you can make equipment builds for the game "Monster Hunter World". This would be used by players to keep track of different builds for different situations. Example: A build to use when hunting a specific monster with a specific weapon.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+### main interface
+```
+interface Build {
+    id: string;
+    name: string;
+    weapon: string; // will be replaced with weapon object
+    helm?: string; // will be replaced with armor object
+    chest?: string; // will be replaced with armor object
+    gloves?: string; // will be replaced with armor object
+    waist?: string; // will be replaced with armor object
+    legs?: string; // will be replaced with armor object
+    charm?: string; // will be replaced with decoration object
+    decorations: list[string]; // will be replaced with decoration object
+    usage: list[string]; // will be replaced with monster object
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### UI Sketches
+![alt text](./assets/readme-diagrams/ui-concept.png)
 
-## Learn more
+### Component List
+- `BuildList`: Renders a flatlist of builds
+- `BuildCard`: Displays details of build
+- `BuildEquipmentList`: Renders a list of equipment used in a build
+- `EquipmentCard`: Displays equiment detail
+- `AddBuildForm`: Form to create build
+- `EquipmentSelector`: Shows a list of equipment you can use in the build
+- `FilterSelector`: Selector to filter by element, by monster, by weapon type, name or skill
+- `SortSelector`: Selector to sort by damage, defense, alphabetically or skill
 
-To learn more about developing your project with Expo, look at the following resources:
+### Filter Options
+Filters:
+- Builds: Element / Monster / Weapon Type / Name
+- Equipment: Skill / Decoration Slots / Name
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Sorting: 
+- Builds: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
+- Equipment: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
 
-## Join the community
+## Part 2
 
-Join our community of developers creating universal apps.
+### Route Plan
+/ -> Root (redirects to /(drawer)/builds)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+##### Main Routes
+/(drawer)/builds -> main screen
+
+/(drawer)/monsters -> to see associated weapons
+
+/(drawer)/profile -> user information (not to be implemented yet)
+
+/(drawer)/hunters -> friends(not to be implemented yet)
+
+/(drawer)/map -> to view hunter friends locations (no to be implemented yet)
+
+##### Item level
+
+/builds/[id] -> build detail (dynamic route)
+
+/builds/[id]/edit -> Edit screen (dynamic route)
+
+##### Other routes
+
+/builds/create -> Create modal (presented over current screen)
+
+### State Diagram
+![alt text](./assets/readme-diagrams/state-diagram.png)
+
+### UI Sketches
+Editbuild screen and detailedBuild screen which will look like the card from part 1.
+![alt text](./assets/readme-diagrams/ui-concept2.png)
