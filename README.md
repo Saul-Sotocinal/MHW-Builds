@@ -85,22 +85,22 @@ Editbuild screen and detailedBuild screen which will look like the card from par
 CREATE TABLE IF NOT EXISTS weapons (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
-    weapon_type TEXT NOT NULL CHECK (element IN ("greatsword" , "longsword" , "sword_and_shield" , "dual_blades", "hammer" , "hunting_horn" , "lance" , "gunlance" , "switch_axe", "charge_blade" , "insect_glaive" , "light_bowgun" , "heavy_bowgun" , "bow")),
-    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder”, "dragon", "water", "ice", "blast", "paralysis”, "poison", "sleep")),
+    weapon_type TEXT NOT NULL CHECK (weapon_type IN ("greatsword" , "longsword" , "sword_and_shield" , "dual_blades", "hammer" , "hunting_horn" , "lance" , "gunlance" , "switch_axe", "charge_blade" , "insect_glaive" , "light_bowgun" , "heavy_bowgun" , "bow")),
+    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder", "dragon", "water", "ice", "blast", "paralysis", "poison", "sleep")),
     attack INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS monsters (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
-    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder”, "dragon", "water", "ice", "blast", "paralysis”, "poison", "sleep")),
+    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder", "dragon", "water", "ice", "blast", "paralysis", "poison", "sleep")),
     classification TEXT NOT NULL CHECK (classification IN ("bird wyvern" , "brute wyvern" , "fanged wyvern" , "fanged beast", "flying wyvern" , "piscine wyvern" , "relict" , "elder dragon"))
 );
 
 CREATE TABLE IF NOT EXISTS armor (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
-    armor_type TEXT NOT NULL CHECK (element IN ("helm" , "chest" , "gloves" , "waist", "legs")),
+    armor_type TEXT NOT NULL CHECK (armor_type IN ("helm" , "chest" , "gloves" , "waist", "legs")),
     defense INTEGER NOT NULL
 );
 
