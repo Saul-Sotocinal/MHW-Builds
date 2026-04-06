@@ -104,18 +104,18 @@ CREATE TABLE IF NOT EXISTS armor (
     defense INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS skills (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+    max_level INTEGER
+);
+
 CREATE TABLE IF NOT EXISTS charms (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL
     skill_id INTEGER
 
     FOREIGN KEY(skill_id) REFERENCES skills(id)
-);
-
-CREATE TABLE IF NOT EXISTS skills (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL
-    max_level INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS armor_skills (
