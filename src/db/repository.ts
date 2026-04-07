@@ -1,4 +1,4 @@
-import { Armor, ArmorType, Build, Monster, Weapon } from "@/types/interfaces";
+import { Armor, ArmorType, Build, Charm, Monster, Weapon } from "@/types/interfaces";
 import { SQLiteDatabase } from "expo-sqlite";
 
 /**
@@ -113,5 +113,20 @@ export async function addArmor(db: SQLiteDatabase, newArmor: Armor): Promise<num
   return (await db.runAsync(
     'INSERT INTO armor (name, armor_type, defense) VALUES (?, ?, ?)',
     newArmor.name, newArmor.type, newArmor.defense
+  )).lastInsertRowId
+}
+
+export async function getCharms(db: SQLiteDatabase): Promise<Charm[]> {
+  return db.getAllAsync('SELECT * FROM charms ORDER BY id DESC')
+}
+
+export async function getCharm(db: SQLiteDatabase, id: number): Promise<Charm | null> {
+  return db.getFirstAsync('SELECT * FROM charms WHERE id = ?', id)
+}
+
+export async function addCharm(db: SQLiteDatabase, newCharm: Charm): Promise<number> {
+  return (await db.runAsync(
+    'INSERT INTO charms (name) VALUES (?)',
+    newCharm.name
   )).lastInsertRowId
 }
