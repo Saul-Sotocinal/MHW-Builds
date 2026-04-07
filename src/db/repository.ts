@@ -22,7 +22,7 @@ export function isClosedResourceSqliteError(error: unknown) {
 }
 
 export async function getBuilds(db: SQLiteDatabase): Promise<Build[]> {
-  return db.getAllAsync('SELECT * FROM builds ORDER BY id DESC')
+  return db.getAllAsync('SELECT * FROM builds ORDER BY id ASC')
 }
 
 export async function getBuild(db: SQLiteDatabase, id: number): Promise<Build | null> {
@@ -59,7 +59,7 @@ export async function deleteBuild(db: SQLiteDatabase, id: number): Promise<numbe
 
 
 export async function getMonsters(db: SQLiteDatabase): Promise<Monster[]> {
-  return db.getAllAsync('SELECT * FROM monsters ORDER BY id DESC')
+  return db.getAllAsync('SELECT * FROM monsters ORDER BY id ASC')
 }
 
 export async function getMonster(db: SQLiteDatabase, id: number): Promise<Monster | null> {
@@ -75,7 +75,7 @@ export async function addMonster(db: SQLiteDatabase, monster: Monster): Promise<
 
 
 export async function getWeapons(db: SQLiteDatabase): Promise<Weapon[]> {
-  return db.getAllAsync('SELECT * FROM weapons ORDER BY id DESC')
+  return db.getAllAsync('SELECT * FROM weapons ORDER BY id ASC')
 }
 
 export async function getWeapon(db: SQLiteDatabase, id: number): Promise<Weapon | null> {
@@ -90,7 +90,7 @@ export async function addWeapon(db: SQLiteDatabase, newWeapon: Weapon): Promise<
 }
 
 export async function getArmors(db: SQLiteDatabase): Promise<Armor[]> {
-  return db.getAllAsync('SELECT * FROM armor ORDER BY id DESC')
+  return db.getAllAsync('SELECT * FROM armor ORDER BY id ASC')
 }
 
 export async function getArmorsByType(db: SQLiteDatabase, type: ArmorType): Promise<Armor[]> {
@@ -117,7 +117,7 @@ export async function addArmor(db: SQLiteDatabase, newArmor: Armor): Promise<num
 }
 
 export async function getCharms(db: SQLiteDatabase): Promise<Charm[]> {
-  return db.getAllAsync('SELECT * FROM charms ORDER BY id DESC')
+  return db.getAllAsync('SELECT * FROM charms ORDER BY id ASC')
 }
 
 export async function getCharm(db: SQLiteDatabase, id: number): Promise<Charm | null> {

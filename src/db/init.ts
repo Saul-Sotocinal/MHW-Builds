@@ -1,16 +1,16 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
 export async function initDb(db: SQLiteDatabase) {
-  // await db.execAsync(`
-  //   DROP TABLE IF EXISTS weapons;
-  //   DROP TABLE IF EXISTS monsters;
-  //   DROP TABLE IF EXISTS armor;
-  //   DROP TABLE IF EXISTS skills;
-  //   DROP TABLE IF EXISTS charms;
-  //   DROP TABLE IF EXISTS armor_skills;
-  //   DROP TABLE IF EXISTS builds;
-  //   DROP TABLE IF EXISTS builds_target_monsters;
-  // `);
+  await db.execAsync(`
+    DROP TABLE IF EXISTS weapons;
+    DROP TABLE IF EXISTS monsters;
+    DROP TABLE IF EXISTS armor;
+    DROP TABLE IF EXISTS skills;
+    DROP TABLE IF EXISTS charms;
+    DROP TABLE IF EXISTS armor_skills;
+    DROP TABLE IF EXISTS builds;
+    DROP TABLE IF EXISTS builds_target_monsters;
+  `);
 
   await db.execAsync(`
     pragma journal_mode = 'wal';
