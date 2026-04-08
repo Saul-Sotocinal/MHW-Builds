@@ -1,4 +1,4 @@
-import { HiddenBuildsContextProvider } from "@/components/builds/hidden-builds-context";
+import { HiddenBuildsContextProvider } from "@/state/hidden-builds-context";
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { Stack } from "expo-router";

@@ -1,14 +1,15 @@
-import { BuildsContext } from '@/components/builds/builds-context';
 import { color } from '@/data/color-scheme';
-import { useContext, useState } from 'react';
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useBuilds } from '@/state/builds-context';
+import { useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import { LineMark } from './line-mark';
 import { TextStroke } from './text-stroke';
 
 export function Title({ title, props, renameId }:
-  { title: string, props?: props, renameId?: string }) {
+  { title: string, props?: props, renameId?: number }) {
   const [text, setText] = useState(title)
-  const {builds, setBuilds} = useContext(BuildsContext)!
+  const { state, refresh, add, update, remove } = useBuilds();
   const TITLE_BORDER = require('@assets/ui_elements/title_border.png')
   props = { ...DEFAULT_PROPS, ...props }
   let widthToAdd = props.width ? props.width : 0;
@@ -18,16 +19,18 @@ export function Title({ title, props, renameId }:
     <View style={[style.container, { backgroundColor: props.bgColor }]}>
       <Image source={TITLE_BORDER} style={[style.decoration, { tintColor: props.decoColor }]} resizeMode='stretch'></Image>
       <View style={{ width: props.width }}></View>
-      <View style={[style.textWrapper, {width: 200 + widthToAdd - 20}]}>
+      <View style={[style.textWrapper, { width: 200 + widthToAdd - 20 }]}>
         <TextStroke stroke={1} color='black'>
-          {renameId ?
-            <TextInput style={style.text} numberOfLines={1} value={text} onChangeText={(text) => {
-              setText(text)
-              builds.find((build) => build.id === renameId)!.name = text
-              setBuilds([...builds]);
-            }} />
-            :
-            <Text style={style.text} numberOfLines={1}>{title} </Text>
+          {
+            renameId !== undefined ?
+              <TextInput style={style.text} numberOfLines={1} value={text} onChangeText={(text) => {
+                setText(text)
+                const updatedBuild = state.builds.find((build) => build.id === renameId)!
+                updatedBuild.name = text
+                update(updatedBuild)
+              }} />
+              :
+              <Text style={style.text} numberOfLines={1}>{title} </Text>
           }
         </TextStroke>
       </View>

@@ -1,13 +1,13 @@
 export interface Build {
-  id: string;
+  id: number;
   name: string;
   weapon: Weapon;
-  helm: Armor;
+  head: Armor;
   chest: Armor;
   gloves: Armor;
   waist: Armor;
   legs: Armor;
-  talisman: Armor;
+  charm: Charm;
 }
 
 export type Element = "blast" | "dragon" | "fire" | "ice" | "paralysis"
@@ -17,7 +17,7 @@ export type WeaponType = "greatsword" | "longsword" | "sword_and_shield" | "dual
   | "hammer" | "hunting_horn" | "lance" | "gunlance" | "switch_axe"
   | "charge_blade" | "insect_glaive" | "light_bowgun" | "heavy_bowgun" | "bow";
 
-export type ArmorType = "helm" | "chest" | "gloves" | "waist" | "legs" | "talisman";
+export type ArmorType = "head" | "chest" | "gloves" | "waist" | "legs" | "charm";
 
 export type Classification = 'bird wyvern' | 'brute wyvern' | 'fanged wyvern' |
   'fanged beast' | 'flying wyvern' | 'piscine wyvern' | 'relict' | 'elder dragon';
@@ -29,7 +29,7 @@ export interface Weapon {
   type: WeaponType
   element: Element
 
-  damage: number;
+  attack: number;
 }
 
 export interface Armor {
@@ -42,10 +42,15 @@ export interface Armor {
 export interface Charm {
   id: number;
   name: string;
+  type: "charm";
 }
 
-export function isWeapon(equipment: Weapon | Armor): equipment is Weapon {
-  return (equipment as Weapon).damage !== undefined;
+export function isWeapon(equipment: Weapon | Armor| Charm): equipment is Weapon {
+  return (equipment as Weapon).attack !== undefined;
+}
+
+export function isArmor(equipment: Armor | Charm): equipment is Armor {
+  return (equipment as Armor).defense !== undefined
 }
 
 export interface FilterItem {

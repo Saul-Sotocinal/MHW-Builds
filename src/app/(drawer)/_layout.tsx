@@ -1,5 +1,5 @@
-import { BuildsContextProvider } from "@/components/builds/builds-context";
 import { initDb } from "@/db/init";
+import { BuildsProvider } from "@/state/builds-context";
 import { DrawerToggleButton } from "@react-navigation/drawer";
 import { Drawer } from "expo-router/drawer";
 import { SQLiteProvider } from "expo-sqlite";
@@ -7,7 +7,7 @@ import { SQLiteProvider } from "expo-sqlite";
 export default function Layout() {
   return (
     <SQLiteProvider databaseName="mhwbuilds.db" onInit={initDb}>
-      <BuildsContextProvider>
+      <BuildsProvider>
         <Drawer screenOptions={{
           headerStyle: { backgroundColor: "#FFFFFF55" },
           headerTransparent: true,
@@ -49,7 +49,7 @@ export default function Layout() {
             }}
           />
         </Drawer>
-      </BuildsContextProvider>
+      </BuildsProvider>
     </SQLiteProvider>
   );
 }

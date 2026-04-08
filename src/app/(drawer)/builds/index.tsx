@@ -1,12 +1,12 @@
 import { BottomBar } from '@/components/builds/bottom-bar';
-import { BuildsContext } from '@/components/builds/builds-context';
-import { HiddenBuildsContext } from '@/components/builds/hidden-builds-context';
 import { Card } from '@/components/general/card';
 import { LineMark } from '@/components/general/line-mark';
 import { Title } from '@/components/general/title';
 import { color } from '@/data/color-scheme';
 import { ELEMENT_ICONS } from '@/data/element_data';
 import { EQUIPMENT_ICONS } from '@/data/equipment_data';
+import { useBuilds } from '@/state/builds-context';
+import { HiddenBuildsContext } from '@/state/hidden-builds-context';
 import { Build } from '@/types/interfaces';
 import { Link } from 'expo-router';
 import { useContext, useState } from 'react';
@@ -17,7 +17,7 @@ export default function Builds() {
   const [viewMode, setViewMode] = useState<'list' | 'card'>('list')
   const [flatListRef, setFlatListRef] = useState<FlatList<Build> | null>(null)
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
-  const { builds, setBuilds } = useContext(BuildsContext)!
+    const { state, refresh, add, update, remove } = useBuilds();
   const { hiddenBuilds, setHiddenBuilds } = useContext(HiddenBuildsContext)!
 
   return (
@@ -27,9 +27,9 @@ export default function Builds() {
           <FlatList
             style={style.list}
             contentContainerStyle={style.list_item}
-            data={builds}
+            data={state.builds}
             renderItem={viewMode == "list" ? CompactCard : DetailedCard}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             ref={(ref) => { setFlatListRef(ref) }}
           />
 
@@ -49,12 +49,12 @@ export default function Builds() {
       <Link style={style.link} href={{ pathname: "/builds/[id]", params: { id: build.id } }}>
         <Card iconList={EQUIPMENT_ICONS} type={build.weapon.type} name={build.name} props={{ width: 350 }}>
           <View style={style.damage}>
-            <Text style={style.text}>{build.weapon.damage} DMG</Text>
+            <Text style={style.text}>{build.weapon.attack} DMG</Text>
             <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
           </View>
 
           <Text style={style.text}>{
-            build.helm.defense +
+            build.head.defense +
             build.chest.defense +
             build.gloves.defense +
             build.waist.defense +
@@ -68,7 +68,7 @@ export default function Builds() {
   function DetailedCard({ item: build }: { item: Build }) {
     // Not rendering builds if filtered out
     if (!hiddenBuilds.every((id) => id !== build.id))
-      return <View style={style.hidden} />
+      return (<View style={style.hidden} />)
 
     return <Link style={detailed_style.link} href={{ pathname: "/builds/[id]", params: { id: build.id } }}>
       <View style={detailed_style.item}>
@@ -76,21 +76,21 @@ export default function Builds() {
 
         <View>
           <EquipmentLine type={build.weapon.type} name={build.weapon.name} />
-          <EquipmentLine type={build.helm.type} name={build.helm.name} />
+          <EquipmentLine type={build.head.type} name={build.head.name} />
           <EquipmentLine type={build.chest.type} name={build.chest.name} />
           <EquipmentLine type={build.gloves.type} name={build.gloves.name} />
           <EquipmentLine type={build.waist.type} name={build.waist.name} />
           <EquipmentLine type={build.legs.type} name={build.legs.name} />
-          <EquipmentLine type={build.talisman.type} name={build.talisman.name} />
+          <EquipmentLine type={build.charm.type} name={build.charm.name} />
         </View>
 
         <View style={detailed_style.stats}>
           <View style={detailed_style.attack}>
-            <Text style={detailed_style.stats_details}>{build.weapon.damage} ATK</Text>
+            <Text style={detailed_style.stats_details}>{build.weapon.attack} ATK</Text>
             <Image source={ELEMENT_ICONS[build.weapon.element]} style={detailed_style.element} />
           </View>
           <Text style={detailed_style.stats_details}>{
-            build.helm.defense +
+            build.head.defense +
             build.chest.defense +
             build.gloves.defense +
             build.waist.defense +

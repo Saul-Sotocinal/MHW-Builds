@@ -1,7 +1,7 @@
-import { BuildsContext } from "@/components/builds/builds-context";
 import { AVAILABLE_ARMORS, AVAILABLE_WEAPONS, EQUIPMENT_ICONS } from "@/data/equipment_data";
-import { Armor, Build, isWeapon, Weapon } from "@/types/interfaces";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { useBuilds } from "@/state/builds-context";
+import { Armor, Build, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
+import { Dispatch, SetStateAction } from "react";
 import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -10,13 +10,13 @@ export function EquipmentSelector({ build, props, setSelector }:
     build: Build, props: EquipmentSelectorProps,
     setSelector: Dispatch<SetStateAction<EquipmentSelectorProps>>
   }) {
-  const {builds, setBuilds} = useContext(BuildsContext)!;
+  const { state, refresh, add, update, remove } = useBuilds();
   const renderItem = ({ item }: { item: Weapon | Armor }) => (
     <Pressable style={style.item} onPress={() => {
-      changeEquipment(item, item.type, build);
+      const updatedBuild = changeEquipment(item, item.type, build);
 
-      setSelector({isShown: false});
-      setBuilds([...builds]);
+      setSelector({ isShown: false });
+      update(updatedBuild)
     }}>
       <Image style={style.equipment_icon} source={EQUIPMENT_ICONS[item.type]} />
       <Text>{item.name}</Text>
@@ -48,37 +48,42 @@ export function EquipmentSelector({ build, props, setSelector }:
   );
 }
 
-function changeEquipment(newEquipment: Armor | Weapon, type: string, build: Build) {
+function changeEquipment(newEquipment: Armor | Weapon | Charm, type: string, build: Build): Build {
+  const updatedBuild = { ...build }
+
   if (isWeapon(newEquipment)) {
-    build.weapon = {...newEquipment};
-    return;
+    updatedBuild.weapon = { ...newEquipment };
+    return updatedBuild
   }
 
-  switch (newEquipment.type) {
-    case "helm":
-      build.helm = {...newEquipment}
-      break;
-    case "chest":
-      build.chest = {...newEquipment}
-      break;
-    case "gloves":
-      build.gloves = {...newEquipment}
-      break;
-    case "waist":
-      build.waist = {...newEquipment}
-      break;
-    case "legs":
-      build.legs = {...newEquipment}
-      break;
-    case "talisman":
-      build.talisman = {...newEquipment}
-      break;
+  if (isArmor(newEquipment)) {
+    switch (newEquipment.type) {
+      case "head":
+        updatedBuild.head = { ...newEquipment }
+        break;
+      case "chest":
+        updatedBuild.chest = { ...newEquipment }
+        break;
+      case "gloves":
+        updatedBuild.gloves = { ...newEquipment }
+        break;
+      case "waist":
+        updatedBuild.waist = { ...newEquipment }
+        break;
+      case "legs":
+        updatedBuild.legs = { ...newEquipment }
+        break;
+    }
+    return updatedBuild
   }
+
+  updatedBuild.charm = {...newEquipment}
+  return updatedBuild
 }
 
 interface EquipmentSelectorProps {
   isShown: boolean,
-  equipment?: Weapon | Armor
+  equipment?: Weapon | Armor | Charm
 }
 
 const style = StyleSheet.create({

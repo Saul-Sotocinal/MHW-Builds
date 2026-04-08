@@ -1,4 +1,3 @@
-import { BuildsContext } from "@/components/builds/builds-context";
 import { EquipmentSelector } from "@/components/builds/equipment-selector";
 import { Label } from "@/components/general/button-label";
 import { Card } from "@/components/general/card";
@@ -7,18 +6,19 @@ import { Title } from "@/components/general/title";
 import { color } from "@/data/color-scheme";
 import { ELEMENT_ICONS } from "@/data/element_data";
 import { EQUIPMENT_ICONS } from "@/data/equipment_data";
-import { Armor, isWeapon, Weapon } from "@/types/interfaces";
+import { useBuilds } from "@/state/builds-context";
+import { Armor, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Alert, Image, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function BuildDetailScreen() {
-  const { builds, setBuilds } = useContext(BuildsContext)!;
-  const [selector, setSelector] = useState<{ isShown: boolean, equipment?: Weapon | Armor }>({ isShown: false });
+  const { state, refresh, add, update, remove } = useBuilds();
+  const [selector, setSelector] = useState<{ isShown: boolean, equipment?: Weapon | Armor | Charm }>({ isShown: false });
   const { id } = useLocalSearchParams<{ id: string }>();
-  const build = builds.find((b) => b.id === id);
+  const build = state.builds.find((b) => b.id.toString() === id);
   const router = useRouter();
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
@@ -32,9 +32,8 @@ export default function BuildDetailScreen() {
         text: "Delete",
         onPress: () => {
           if (build)
-            builds.splice(builds.indexOf(build), 1)
-
-          setBuilds([...builds])
+            remove(build.id)
+          
           router.back();
         }
       }
@@ -64,21 +63,21 @@ export default function BuildDetailScreen() {
 
                 <View>
                   <EquipmentCard equipment={build.weapon} setSelector={setSelector} />
-                  <EquipmentCard equipment={build.helm} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.head} setSelector={setSelector} />
                   <EquipmentCard equipment={build.chest} setSelector={setSelector} />
                   <EquipmentCard equipment={build.gloves} setSelector={setSelector} />
                   <EquipmentCard equipment={build.waist} setSelector={setSelector} />
                   <EquipmentCard equipment={build.legs} setSelector={setSelector} />
-                  <EquipmentCard equipment={build.talisman} setSelector={setSelector} />
+                  <EquipmentCard equipment={build.charm} setSelector={setSelector} />
                 </View>
 
                 <View style={style.stats}>
                   <View style={style.attack}>
-                    <Text style={style.stats_details}>{build.weapon.damage} ATK</Text>
+                    <Text style={style.stats_details}>{build.weapon.attack} ATK</Text>
                     <Image source={ELEMENT_ICONS[build.weapon.element]} style={style.element} />
                   </View>
                   <Text style={style.stats_details}> {
-                    build.helm.defense +
+                    build.head.defense +
                     build.chest.defense +
                     build.gloves.defense +
                     build.waist.defense +
@@ -103,9 +102,9 @@ export default function BuildDetailScreen() {
 
 function EquipmentCard({ equipment, setSelector }
   : {
-    equipment: Weapon | Armor; setSelector: Dispatch<SetStateAction<{
+    equipment: Weapon | Armor | Charm; setSelector: Dispatch<SetStateAction<{
       isShown: boolean;
-      equipment?: Weapon | Armor;
+      equipment?: Weapon | Armor | Charm;
     }>>
   }) {
   return <Pressable onPress={() => {
@@ -114,14 +113,14 @@ function EquipmentCard({ equipment, setSelector }
     <Card iconList={EQUIPMENT_ICONS} type={equipment.type} name={equipment.name}>
       {isWeapon(equipment) ?
         <View style={card_style.damage}>
-          <Text style={card_style.text}>{equipment.damage} DMG</Text>
+          <Text style={card_style.text}>{equipment.attack} DMG</Text>
           <Image source={ELEMENT_ICONS[equipment.element]} style={card_style.element} />
         </View>
-        :
+        : isArmor(equipment) ?
         <Text style={card_style.text}>{equipment.defense} DEF</Text>
+        : null
       }
     </Card>
-
   </Pressable>
 }
 

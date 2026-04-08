@@ -3,7 +3,7 @@ import { Build, FilterItem } from '@/types/interfaces';
 import { Checkbox } from 'expo-checkbox';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { Button, FlatList, Image, StyleSheet, View } from 'react-native';
-import { HiddenBuildsContext } from './hidden-builds-context';
+import { HiddenBuildsContext } from '../../state/hidden-builds-context';
 
 export function FilterMenu({ display, filterItems, setFilterItems, defaultItems, builds }:
   {
@@ -21,7 +21,7 @@ export function FilterMenu({ display, filterItems, setFilterItems, defaultItems,
         const foundItem: FilterItem = filterItems.find((filterItem) => filterItem.id === item.id)!
         foundItem.selected = !foundItem.selected
 
-        const newHiddenBuilds: string[] = [...hiddenBuilds]
+        const newHiddenBuilds: number[] = [...hiddenBuilds]
 
         if (foundItem.selected) {
           //removing items from the filter when it is unchecked
