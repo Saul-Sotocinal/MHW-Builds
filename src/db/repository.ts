@@ -64,10 +64,6 @@ export async function getBuilds(db: SQLiteDatabase, sort: 'name' | 'damage' | 'd
       legs: (await getArmor(db, rows[i].legs_id))!,
       charm: (await getCharm(db, rows[i].charm_id))!
     })
-
-    console.log(await db.getAllAsync('SELECT * FROM builds'))
-    console.log(rows[i].charm_id)
-    console.log(builds[i].charm)
   }
 
   return builds
