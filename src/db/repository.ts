@@ -27,6 +27,7 @@ export async function getBuilds(db: SQLiteDatabase, sort: 'name' | 'damage' | 'd
   switch (sort) {
     case "name":
       rows = await db.getAllAsync('SELECT * FROM builds ORDER BY name ASC;')
+      break
     case "damage":
       rows = await db.getAllAsync(
         `SELECT * FROM builds as b
@@ -34,6 +35,7 @@ export async function getBuilds(db: SQLiteDatabase, sort: 'name' | 'damage' | 'd
         ON b.weapon_id = w.id
         ORDER BY w.attack DESC;`
       )
+      break
     case "defense":
       rows = await db.getAllAsync(
         `SELECT b.* from armor as a
@@ -46,8 +48,10 @@ export async function getBuilds(db: SQLiteDatabase, sort: 'name' | 'damage' | 'd
         GROUP BY b.id
         ORDER BY sum(defense) DESC;`
       )
+      break
     case "none":
       rows = await db.getAllAsync('SELECT * FROM builds ORDER BY id ASC;')
+      break
   }
 
   let builds: Build[] = []
@@ -136,7 +140,11 @@ export async function addMonster(db: SQLiteDatabase, monster: Monster): Promise<
 
 
 export async function getWeapons(db: SQLiteDatabase): Promise<Weapon[]> {
-  return db.getAllAsync('SELECT * FROM weapons ORDER BY id ASC;')
+  return await db.getAllAsync('SELECT * FROM weapons ORDER BY id ASC;')
+}
+
+export function getWeaponsSync(db: SQLiteDatabase): Weapon[] {
+  return db.getAllSync('SELECT * FROM weapons')
 }
 
 export async function getWeapon(db: SQLiteDatabase, id: number): Promise<Weapon | null> {
@@ -145,7 +153,7 @@ export async function getWeapon(db: SQLiteDatabase, id: number): Promise<Weapon 
 
 export async function addWeapon(db: SQLiteDatabase, newWeapon: Weapon): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO weapons (name, weapon_type, element, attack) VALUES (?, ?, ?, ?);',
+    'INSERT INTO weapons (name, type, element, attack) VALUES (?, ?, ?, ?);',
     newWeapon.name, newWeapon.type, newWeapon.element, newWeapon.attack
   )).lastInsertRowId
 }
@@ -154,8 +162,16 @@ export async function getArmors(db: SQLiteDatabase): Promise<Armor[]> {
   return db.getAllAsync('SELECT * FROM armor ORDER BY id ASC;')
 }
 
+export function getArmorsSync(db: SQLiteDatabase): Armor[] {
+  return db.getAllSync('SELECT * FROM armor')
+}
+
 export async function getArmorsByType(db: SQLiteDatabase, type: ArmorType): Promise<Armor[]> {
-  return db.getAllAsync('SELECT * FROM armor WHERE armor_type = ?;', type)
+  return db.getAllAsync('SELECT * FROM armor WHERE type = ?;', type)
+}
+
+export function getArmorsByTypeSync(db: SQLiteDatabase, type: ArmorType): Armor[] {
+  return db.getAllSync('SELECT * FROM armor WHERE type = ?;', type)
 }
 
 export async function getArmor(db: SQLiteDatabase, id: number): Promise<Armor | null> {
@@ -164,7 +180,7 @@ export async function getArmor(db: SQLiteDatabase, id: number): Promise<Armor | 
 
 export async function getArmorByType(db: SQLiteDatabase, id: number, type: ArmorType): Promise<Armor | null> {
   return db.getFirstAsync(
-    'SELECT * FROM armor WHERE id = ? AND armor_type = ?;',
+    'SELECT * FROM armor WHERE id = ? AND type = ?;',
     id,
     type
   )
@@ -172,13 +188,17 @@ export async function getArmorByType(db: SQLiteDatabase, id: number, type: Armor
 
 export async function addArmor(db: SQLiteDatabase, newArmor: Armor): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO armor (name, armor_type, defense) VALUES (?, ?, ?);',
+    'INSERT INTO armor (name, type, defense) VALUES (?, ?, ?);',
     newArmor.name, newArmor.type, newArmor.defense
   )).lastInsertRowId
 }
 
 export async function getCharms(db: SQLiteDatabase): Promise<Charm[]> {
   return db.getAllAsync('SELECT * FROM charms ORDER BY id ASC;')
+}
+
+export function getCharmsSync(db: SQLiteDatabase): Charm[] {
+  return db.getAllSync('SELECT * FROM charms')
 }
 
 export async function getCharm(db: SQLiteDatabase, id: number): Promise<Charm | null> {

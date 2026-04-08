@@ -28,12 +28,13 @@ export const BuildsContext = createContext<BuildContextType | null>(null);
 export function BuildsProvider({ children }: { children: ReactNode }) {
   const db = useSQLiteContext()
   const [state, dispatch] = useReducer(buildsReducer, initialState)
+  // const [sort, setSort] = useState<'none' | 'name' | 'damage' | 'defense'>('none')
 
   async function refresh(sortOption: 'name' | 'damage' | 'defense' | 'none' = 'none') {
     dispatch({ action: 'loadStart', builds: state.builds })
 
     try {
-      const builds = await getBuilds(db)
+      const builds = await getBuilds(db, sortOption)
 
       dispatch({ action: 'loadSuccess', builds: builds })
     } catch (e) {

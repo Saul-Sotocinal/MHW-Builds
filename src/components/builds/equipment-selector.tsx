@@ -1,6 +1,8 @@
-import { AVAILABLE_ARMORS, AVAILABLE_WEAPONS, EQUIPMENT_ICONS } from "@/data/equipment_data";
+import { EQUIPMENT_ICONS } from "@/data/equipment_data";
+import { getArmorsByTypeSync, getCharmsSync, getWeaponsSync } from "@/db/repository";
 import { useBuilds } from "@/state/builds-context";
 import { Armor, Build, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
+import { useSQLiteContext } from "expo-sqlite";
 import { Dispatch, SetStateAction } from "react";
 import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -11,7 +13,8 @@ export function EquipmentSelector({ build, props, setSelector }:
     setSelector: Dispatch<SetStateAction<EquipmentSelectorProps>>
   }) {
   const { state, refresh, add, update, remove } = useBuilds();
-  const renderItem = ({ item }: { item: Weapon | Armor }) => (
+  const db = useSQLiteContext()
+  const renderItem = ({ item }: { item: Weapon | Armor | Charm }) => (
     <Pressable style={style.item} onPress={() => {
       const updatedBuild = changeEquipment(item, item.type, build);
 
@@ -27,17 +30,22 @@ export function EquipmentSelector({ build, props, setSelector }:
     return;
 
   let items;
-  if (isWeapon(props.equipment!))
-    items = AVAILABLE_WEAPONS
-  else
-    items = AVAILABLE_ARMORS.filter((a) => a.type === props.equipment?.type)
+  if (isWeapon(props.equipment!)) {
+    items = getWeaponsSync(db)
+  }
+  else if (isArmor(props.equipment!)) {
+    items = getArmorsByTypeSync(db, props.equipment.type)
+  }
+  else {
+    items = getCharmsSync(db)
+  }
 
   return (
     <View style={[{ display: props.isShown ? "flex" : "none" }, style.menu]}>
       <FlatList
         data={items}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()} />
+        keyExtractor={(item, index) => index.toString()} />
       <Button
         title="Close"
         onPress={() => {
@@ -77,7 +85,7 @@ function changeEquipment(newEquipment: Armor | Weapon | Charm, type: string, bui
     return updatedBuild
   }
 
-  updatedBuild.charm = {...newEquipment}
+  updatedBuild.charm = { ...newEquipment }
   return updatedBuild
 }
 

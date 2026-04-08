@@ -53,7 +53,7 @@ export function FilterMenu({ display, filterItems, setFilterItems, defaultItems,
       <FlatList
         data={filterItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => index.toString()}
         numColumns={3}
       />
       <Button

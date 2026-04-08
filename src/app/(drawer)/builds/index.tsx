@@ -29,7 +29,7 @@ export default function Builds() {
             contentContainerStyle={style.list_item}
             data={state.builds}
             renderItem={viewMode == "list" ? CompactCard : DetailedCard}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item, index) => index.toString()}
             ref={(ref) => { setFlatListRef(ref) }}
           />
 
