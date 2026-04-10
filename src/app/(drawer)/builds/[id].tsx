@@ -15,7 +15,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function BuildDetailScreen() {
-  const { state, refresh, add, update, remove } = useBuilds();
+  const { state, remove } = useBuilds();
   const [selector, setSelector] = useState<{ isShown: boolean, equipment?: Weapon | Armor | Charm }>({ isShown: false });
   const { id } = useLocalSearchParams<{ id: string }>();
   const build = state.builds.find((b) => b.id.toString() === id);
@@ -59,7 +59,7 @@ export default function BuildDetailScreen() {
           <View>
             <ScrollView>
               <View style={style.build}>
-                <Title title={build.name} renameId={build.id} props={{ width: 130, bgColor: color.RedCard, decoColor: color.RedDeco }} />
+                <Title title={build.name} renameId={build.id} props={{bgColor: color.RedCard, decoColor: color.RedDeco }} />
 
                 <View>
                   <EquipmentCard equipment={build.weapon} setSelector={setSelector} />

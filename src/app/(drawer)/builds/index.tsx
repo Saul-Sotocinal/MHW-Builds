@@ -17,7 +17,7 @@ export default function Builds() {
   const [viewMode, setViewMode] = useState<'list' | 'card'>('list')
   const [flatListRef, setFlatListRef] = useState<FlatList<Build> | null>(null)
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
-    const { state, refresh, add, update, remove } = useBuilds();
+  const { state } = useBuilds();
   const { hiddenBuilds, setHiddenBuilds } = useContext(HiddenBuildsContext)!
 
   return (
@@ -72,7 +72,7 @@ export default function Builds() {
 
     return <Link style={detailed_style.link} href={{ pathname: "/builds/[id]", params: { id: build.id } }}>
       <View style={detailed_style.item}>
-        <Title title={build.name} props={{ width: 130, bgColor: color.RedCard, decoColor: color.RedDeco }} />
+        <Title title={build.name} props={{ bgColor: color.RedCard, decoColor: color.RedDeco }} />
 
         <View>
           <EquipmentLine type={build.weapon.type} name={build.weapon.name} />

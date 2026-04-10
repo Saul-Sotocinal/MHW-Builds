@@ -11,19 +11,19 @@ import { FilterMenu } from './filter-menu';
 import { SortMenu } from './sort-menu';
 
 const DEFAULT_ITEMS: FilterItem[] = [
-  { id: '1', type: 'greatsword', selected: true },
-  { id: '2', type: 'longsword', selected: true },
-  { id: '3', type: 'sword_and_shield', selected: true },
-  { id: '4', type: 'dual_blades', selected: true },
+  { id: '1', type: 'great-sword', selected: true },
+  { id: '2', type: 'long-sword', selected: true },
+  { id: '3', type: 'sword-and-shield', selected: true },
+  { id: '4', type: 'dual-blades', selected: true },
   { id: '5', type: 'hammer', selected: true },
-  { id: '6', type: 'hunting_horn', selected: true },
+  { id: '6', type: 'hunting-horn', selected: true },
   { id: '7', type: 'lance', selected: true },
   { id: '8', type: 'gunlance', selected: true },
-  { id: '9', type: 'switch_axe', selected: true },
-  { id: '10', type: 'charge_blade', selected: true },
-  { id: '11', type: 'insect_glaive', selected: true },
-  { id: '12', type: 'light_bowgun', selected: true },
-  { id: '13', type: 'heavy_bowgun', selected: true },
+  { id: '9', type: 'switch-axe', selected: true },
+  { id: '10', type: 'charge-blade', selected: true },
+  { id: '11', type: 'insect-glaive', selected: true },
+  { id: '12', type: 'light-bowgun', selected: true },
+  { id: '13', type: 'heavy-bowgun', selected: true },
   { id: '14', type: 'bow', selected: true }
 ]
 
@@ -34,7 +34,7 @@ export function BottomBar({ viewMode, setViewMode, flatListRef }: {
 }) {
   const [filter, setFilter] = useState(false)
   const [sort, setSort] = useState(false)
-  const { state, refresh, add, update, remove } = useBuilds();
+  const { state, refresh, add } = useBuilds();
   const [items, setItems] = useState<FilterItem[]>(DEFAULT_ITEMS)
   const { hiddenBuilds, setHiddenBuilds } = useContext(HiddenBuildsContext)!;
   const [sortOption, setSortOption] = useState<"name" | "damage" | "defense" | "none">("none");
@@ -54,13 +54,13 @@ export function BottomBar({ viewMode, setViewMode, flatListRef }: {
     const newBuild: Build = {
       id: 0,
       name: "New Build",
-      weapon: (await getWeapon(db, DEFAULT_BUILD_IDS.weapon_id))!,
-      head: (await getArmor(db, DEFAULT_BUILD_IDS.head_id))!,
-      chest: (await getArmor(db, DEFAULT_BUILD_IDS.chest_id))!,
-      gloves: (await getArmor(db, DEFAULT_BUILD_IDS.gloves_id))!,
-      waist: (await getArmor(db, DEFAULT_BUILD_IDS.waist_id))!,
-      legs: (await getArmor(db, DEFAULT_BUILD_IDS.legs_id))!,
-      charm: (await getCharm(db, DEFAULT_BUILD_IDS.charm_id))!
+      weapon: (await getWeapon(db, DEFAULT_BUILD_IDS.weapon_id, false))!,
+      head: (await getArmor(db, DEFAULT_BUILD_IDS.head_id, false))!,
+      chest: (await getArmor(db, DEFAULT_BUILD_IDS.chest_id, false))!,
+      gloves: (await getArmor(db, DEFAULT_BUILD_IDS.gloves_id, false))!,
+      waist: (await getArmor(db, DEFAULT_BUILD_IDS.waist_id, false))!,
+      legs: (await getArmor(db, DEFAULT_BUILD_IDS.legs_id, false))!,
+      charm: (await getCharm(db, DEFAULT_BUILD_IDS.charm_id, false))!
     }
 
     if (state.builds.length > 0) {

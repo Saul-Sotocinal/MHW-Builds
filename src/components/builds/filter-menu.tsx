@@ -1,3 +1,4 @@
+import { color } from '@/data/color-scheme';
 import { EQUIPMENT_ICONS } from '@/data/equipment_data';
 import { Build, FilterItem } from '@/types/interfaces';
 import { Checkbox } from 'expo-checkbox';
@@ -75,7 +76,7 @@ const style = StyleSheet.create({
   menu: {
     position: "absolute",
     bottom: 100,
-    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    backgroundColor: color.OverlayBG,
     width: "100%",
     alignItems: "center",
     padding: 10

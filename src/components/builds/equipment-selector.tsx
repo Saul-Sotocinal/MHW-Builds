@@ -1,3 +1,4 @@
+import { color } from "@/data/color-scheme";
 import { EQUIPMENT_ICONS } from "@/data/equipment_data";
 import { getArmorsByTypeSync, getCharmsSync, getWeaponsSync } from "@/db/repository";
 import { useBuilds } from "@/state/builds-context";
@@ -6,13 +7,14 @@ import { useSQLiteContext } from "expo-sqlite";
 import { Dispatch, SetStateAction } from "react";
 import { Button, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { Title } from "../general/title";
 
 export function EquipmentSelector({ build, props, setSelector }:
   {
     build: Build, props: EquipmentSelectorProps,
     setSelector: Dispatch<SetStateAction<EquipmentSelectorProps>>
   }) {
-  const { state, refresh, add, update, remove } = useBuilds();
+  const { update } = useBuilds();
   const db = useSQLiteContext()
   const renderItem = ({ item }: { item: Weapon | Armor | Charm }) => (
     <Pressable style={style.item} onPress={() => {
@@ -42,6 +44,7 @@ export function EquipmentSelector({ build, props, setSelector }:
 
   return (
     <View style={[{ display: props.isShown ? "flex" : "none" }, style.menu]}>
+      <Title title={`SELECT EQUIPMENT`} props={{ bgColor: "#67804418", decoColor: "#8cc381" }} />
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -99,11 +102,11 @@ const style = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     bottom: 40,
-    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    backgroundColor: color.OverlayBG,
     alignItems: "center",
-    width: 250,
-    height: 300,
-    padding: 10
+    width: 350,
+    height: '80%',
+    padding: 5
   },
 
   item: {

@@ -2,19 +2,19 @@ import { Armor, Weapon } from '../types/interfaces';
 
 export const EQUIPMENT_ICONS: { [name: string]: any } = {
   // WEAPONS
-  "greatsword": require(`@assets/weapon-icons/greatsword.png`),
-  "longsword": require(`@assets/weapon-icons/longsword.png`),
-  "sword_and_shield": require(`@assets/weapon-icons/sword-and-shield.png`),
-  "dual_blades": require(`@assets/weapon-icons/dual-blades.png`),
+  "great-sword": require(`@assets/weapon-icons/greatsword.png`),
+  "long-sword": require(`@assets/weapon-icons/longsword.png`),
+  "sword-and-shield": require(`@assets/weapon-icons/sword-and-shield.png`),
+  "dual-blades": require(`@assets/weapon-icons/dual-blades.png`),
   "hammer": require(`@assets/weapon-icons/hammer.png`),
-  "hunting_horn": require(`@assets/weapon-icons/hunting-horn.png`),
+  "hunting-horn": require(`@assets/weapon-icons/hunting-horn.png`),
   "lance": require(`@assets/weapon-icons/lance.png`),
   "gunlance": require(`@assets/weapon-icons/gunlance.png`),
-  "switch_axe": require(`@assets/weapon-icons/switch-axe.png`),
-  "charge_blade": require(`@assets/weapon-icons/charge-blade.png`),
-  "insect_glaive": require(`@assets/weapon-icons/insect-glaive.png`),
-  "light_bowgun": require(`@assets/weapon-icons/light-bowgun.png`),
-  "heavy_bowgun": require(`@assets/weapon-icons/heavy-bowgun.png`),
+  "switch-axe": require(`@assets/weapon-icons/switch-axe.png`),
+  "charge-blade": require(`@assets/weapon-icons/charge-blade.png`),
+  "insect-glaive": require(`@assets/weapon-icons/insect-glaive.png`),
+  "light-bowgun": require(`@assets/weapon-icons/light-bowgun.png`),
+  "heavy-bowgun": require(`@assets/weapon-icons/heavy-bowgun.png`),
   "bow": require(`@assets/weapon-icons/bow.png`),
 
   // ARMOR
@@ -122,11 +122,11 @@ export interface DbBuild {
 export const DEFAULT_BUILD_IDS: DbBuild = {
   id: 0,
   name: "New Build",
-  weapon_id: 170,
-  head_id: 1,
-  chest_id: 2,
-  gloves_id: 3,
-  waist_id: 4,
-  legs_id: 5,
-  charm_id: 234,
+  weapon_id: -1,
+  head_id: -1,
+  chest_id: -2,
+  gloves_id: -3,
+  waist_id: -4,
+  legs_id: -5,
+  charm_id: -1,
 }

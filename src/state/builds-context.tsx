@@ -7,20 +7,22 @@
  * https://stackoverflow.com/questions/69247544/how-to-properly-change-react-context-value
  */
 
-import { addBuild, deleteBuild, getBuilds, isClosedResourceSqliteError, updateBuild } from "@/db/repository";
+import { addBuild, deleteBuild, getBuilds, getWeapons, isClosedResourceSqliteError, updateBuild } from "@/db/repository";
+import { fetchWeaponData } from "@/services/api";
 import { Build } from "@/types/interfaces";
 import { useSQLiteContext } from "expo-sqlite";
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
 import { buildsReducer, BuildsState } from "./reducer";
 
-const initialState: BuildsState = { builds: [], isLoading: true, error: null }
+const initialState: BuildsState = { builds: [], weapons: [], armors: [], charms: [], isLoading: true, error: null }
 
 interface BuildContextType {
   state: BuildsState,
   refresh: (sortOption?: 'name' | 'damage' | 'defense' | 'none') => Promise<void>,
   add: (build: Build) => Promise<void>,
   update: (build: Build) => Promise<void>,
-  remove: (id: number) => Promise<void>
+  remove: (id: number) => Promise<void>,
+  fetchData: (type: 'weapon' | 'armor' | 'charm') => Promise<void>
 }
 
 export const BuildsContext = createContext<BuildContextType | null>(null);
@@ -40,7 +42,7 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
     } catch (e) {
       if (!isClosedResourceSqliteError(e)) {
         console.error(`DB Error: ${e}`)
-        dispatch({ action: 'loadError', errorMsg: 'Failed to fetch builds from DB.'})
+        dispatch({ action: 'loadError', errorMsg: 'Failed to fetch builds from DB.' })
       }
     }
   }
@@ -54,7 +56,7 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
     } catch (e) {
       if (!isClosedResourceSqliteError(e)) {
         console.error(`DB Error: ${e}`)
-        dispatch({ action: 'loadError', errorMsg: 'Failed to add new build to DB.'})
+        dispatch({ action: 'loadError', errorMsg: 'Failed to add new build to DB.' })
       }
     }
   }
@@ -62,11 +64,11 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
   async function update(newBuild: Build) {
     try {
       const updatedBuild = await updateBuild(db, newBuild)
-      dispatch({action: 'updateSuccess', id: updatedBuild.id, payload: updatedBuild })
+      dispatch({ action: 'updateSuccess', id: updatedBuild.id, payload: updatedBuild })
     } catch (e) {
       if (!isClosedResourceSqliteError(e)) {
         console.error(`DB Error: ${e}`)
-        dispatch({ action: 'loadError', errorMsg: 'Failed to update build from DB.'})
+        dispatch({ action: 'loadError', errorMsg: 'Failed to update build from DB.' })
       }
     }
   }
@@ -77,7 +79,43 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
     } catch (e) {
       if (!isClosedResourceSqliteError(e)) {
         console.error(`DB Error: ${e}`)
-        dispatch({ action: 'loadError', errorMsg: 'Failed to delete build from DB.'})
+        dispatch({ action: 'loadError', errorMsg: 'Failed to delete build from DB.' })
+      }
+    }
+  }
+
+  async function fetchData(type: 'weapon' | 'armor' | 'charm') {
+    try {
+      switch (type) {
+        case "weapon":
+          dispatch({ action: 'weaponFetchStart', payload: [] })
+
+          if (state.weapons.length !== 0) {
+            console.log('✓ Cache hit! Using cached data.');
+            dispatch({ action: 'weaponFetchSuccess', payload: state.weapons })
+            break
+          }
+
+          let weapons = await getWeapons(db)
+
+          if (weapons.length !== 0) {
+            console.log('✗ Cache miss. Fetching from DB...');
+            dispatch({ action: 'weaponFetchSuccess', payload: weapons })
+            break
+          }
+
+          console.log('✗ Cache miss. Fetching from API...');
+          dispatch({ action: 'weaponFetchSuccess', payload: await fetchWeaponData() })
+          break
+        case "armor":
+          dispatch({ action: 'armorFetchStart', payload: [] })
+        case "charm":
+          dispatch({ action: 'charmFetchStart', payload: [] })
+      }
+    } catch (e) {
+      if (!isClosedResourceSqliteError(e)) {
+        console.error(`DB Error: ${e}`)
+        dispatch({ action: 'loadError', errorMsg: 'Failed to delete build from DB.' })
       }
     }
   }
@@ -95,7 +133,8 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
       refresh: refresh,
       add: add,
       update: update,
-      remove: remove
+      remove: remove,
+      fetchData: fetchData
     }}>
       {children}
     </BuildsContext.Provider>
@@ -103,7 +142,7 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
 }
 
 export function useBuilds(): BuildContextType {
-  const context =  useContext(BuildsContext)
+  const context = useContext(BuildsContext)
 
   if (context === null) throw new Error("Builds context is null.")
   return context

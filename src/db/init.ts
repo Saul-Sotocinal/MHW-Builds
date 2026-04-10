@@ -1,14 +1,14 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
 export async function initDb(db: SQLiteDatabase) {
-  // await reset(db)
+  await reset(db)
 
   await db.execAsync(`
     pragma journal_mode = 'wal';
     CREATE TABLE IF NOT EXISTS weapons (
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
-      type TEXT NOT NULL CHECK (type IN ("greatsword" , "longsword" , "sword_and_shield" , "dual_blades", "hammer" , "hunting_horn" , "lance" , "gunlance" , "switch_axe", "charge_blade" , "insect_glaive" , "light_bowgun" , "heavy_bowgun" , "bow")),
+      type TEXT NOT NULL CHECK (type IN ("great-sword" , "long-sword" , "sword-and-shield" , "dual-blades", "hammer" , "hunting-horn" , "lance" , "gunlance" , "switch-axe", "charge-blade" , "insect-glaive" , "light-bowgun" , "heavy-bowgun" , "bow")),
       element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder", "dragon", "water", "ice", "blast", "paralysis", "poison", "sleep")),
       attack INTEGER NOT NULL
     );
@@ -80,6 +80,39 @@ export async function initDb(db: SQLiteDatabase) {
     );
   `)
 
+  await db.runAsync(`
+    INSERT OR REPLACE INTO weapons (id, name, type, element, attack)
+    VALUES (-1, "None", "great-sword", "raw", 0)`
+  )
+  await db.runAsync(`
+    INSERT OR REPLACE INTO armor (id, name, type, defense)
+    VALUES (-1, "None", "head", 0)`
+  )
+  await db.runAsync(`
+    INSERT OR REPLACE INTO armor (id, name, type, defense)
+    VALUES (-2, "None", "chest", 0)`
+  )
+  await db.runAsync(`
+    INSERT OR REPLACE INTO armor (id, name, type, defense)
+    VALUES (-3, "None", "gloves", 0)`
+  )
+  await db.runAsync(`
+    INSERT OR REPLACE INTO armor (id, name, type, defense)
+    VALUES (-4, "None", "waist", 0)`
+  )
+  await db.runAsync(`
+    INSERT OR REPLACE INTO armor (id, name, type, defense)
+    VALUES (-5, "None", "legs", 0)`
+  )
+  await db.runAsync(`
+    INSERT OR REPLACE INTO charms (id, name)
+    VALUES (-1, "None")`
+  )
+
+  // fetchWeaponData()
+  // fetchArmorData()
+  // fetchCharmsData()
+
   // await seed(db)
 }
 
@@ -99,11 +132,11 @@ async function reset(db: SQLiteDatabase) {
 async function seed(db: SQLiteDatabase) {
   await db.runAsync(`
     INSERT INTO weapons (id, name, type, element, attack)
-    VALUES (10, "Purgation's Atrocity", "greatsword", "dragon", 210);`
+    VALUES (10, "Purgation's Atrocity", "great-sword", "dragon", 210);`
   )
   await db.runAsync(`
     INSERT INTO weapons (id, name, type, element, attack)
-    VALUES (170, "Hunter's Knife 1", "sword_and_shield", "raw", 80);`
+    VALUES (170, "Hunter's Knife 1", "sword-and-shield", "raw", 80);`
   )
 
   await db.runAsync(`

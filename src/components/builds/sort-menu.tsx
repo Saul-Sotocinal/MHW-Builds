@@ -1,3 +1,4 @@
+import { color } from '@/data/color-scheme';
 import { useBuilds } from '@/state/builds-context';
 import { Build } from '@/types/interfaces';
 import { Dispatch, SetStateAction } from 'react';
@@ -5,7 +6,7 @@ import { Button, StyleSheet, View } from 'react-native';
 
 export function SortMenu({ display, setSortOption }:
   { display: boolean, setSortOption: Dispatch<SetStateAction<"name" | "damage" | "defense" | "none">> }) {
-  const { state, refresh, add, update, remove } = useBuilds();
+  const { refresh } = useBuilds();
 
   return (
     <View style={[{ display: display ? "flex" : "none" }, style.menu]}>
@@ -81,7 +82,7 @@ export function resetSort(builds: Build[]) {
 
 const style = StyleSheet.create({
   menu: {
-    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    backgroundColor: color.OverlayBG,
     position: 'absolute',
     alignItems: 'center',
     bottom: 100,

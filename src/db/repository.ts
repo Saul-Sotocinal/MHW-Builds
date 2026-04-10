@@ -60,13 +60,13 @@ export async function getBuilds(db: SQLiteDatabase, sort: 'name' | 'damage' | 'd
     builds.push({
       id: rows[i].id,
       name: rows[i].name,
-      weapon: (await getWeapon(db, rows[i].weapon_id))!,
-      head: (await getArmor(db, rows[i].head_id))!,
-      chest: (await getArmor(db, rows[i].chest_id))!,
-      gloves: (await getArmor(db, rows[i].gloves_id))!,
-      waist: (await getArmor(db, rows[i].waist_id))!,
-      legs: (await getArmor(db, rows[i].legs_id))!,
-      charm: (await getCharm(db, rows[i].charm_id))!
+      weapon: (await getWeapon(db, rows[i].weapon_id, false))!,
+      head: (await getArmor(db, rows[i].head_id, false))!,
+      chest: (await getArmor(db, rows[i].chest_id, false))!,
+      gloves: (await getArmor(db, rows[i].gloves_id, false))!,
+      waist: (await getArmor(db, rows[i].waist_id, false))!,
+      legs: (await getArmor(db, rows[i].legs_id, false))!,
+      charm: (await getCharm(db, rows[i].charm_id, false))!
     })
   }
 
@@ -82,19 +82,19 @@ export async function getBuild(db: SQLiteDatabase, id: number): Promise<Build | 
   return {
     id: row.id,
     name: row.name,
-    weapon: (await getWeapon(db, row.weapon_id))!,
-    head: (await getArmor(db, row.head_id))!,
-    chest: (await getArmor(db, row.chest_id))!,
-    gloves: (await getArmor(db, row.gloves_id))!,
-    waist: (await getArmor(db, row.waist_id))!,
-    legs: (await getArmor(db, row.legs_id))!,
-    charm: (await getCharm(db, row.charm_id))!
+    weapon: (await getWeapon(db, row.weapon_id, false))!,
+    head: (await getArmor(db, row.head_id, false))!,
+    chest: (await getArmor(db, row.chest_id, false))!,
+    gloves: (await getArmor(db, row.gloves_id, false))!,
+    waist: (await getArmor(db, row.waist_id, false))!,
+    legs: (await getArmor(db, row.legs_id, false))!,
+    charm: (await getCharm(db, row.charm_id, false))!
   }
 }
 
 export async function addBuild(db: SQLiteDatabase, name: string): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO builds (name, weapon_id, head_id, chest_id, gloves_id, waist_id, legs_id, charm_id) VALUES (?, 170, 1, 2, 3, 4, 5, 234);',
+    'INSERT INTO builds (name, weapon_id, head_id, chest_id, gloves_id, waist_id, legs_id, charm_id) VALUES (?, -1, -1, -2, -3, -4, -5, -1);',
     name
   )).lastInsertRowId
 }
@@ -139,16 +139,16 @@ export async function addMonster(db: SQLiteDatabase, monster: Monster): Promise<
 }
 
 
-export async function getWeapons(db: SQLiteDatabase): Promise<Weapon[]> {
-  return await db.getAllAsync('SELECT * FROM weapons ORDER BY id ASC;')
+export async function getWeapons(db: SQLiteDatabase, ignoreNone: boolean = true): Promise<Weapon[]> {
+  return await db.getAllAsync(`SELECT * FROM weapons ${ignoreNone ? 'WHERE id > 0' : ''};`)
 }
 
-export function getWeaponsSync(db: SQLiteDatabase): Weapon[] {
-  return db.getAllSync('SELECT * FROM weapons')
+export function getWeaponsSync(db: SQLiteDatabase, ignoreNone: boolean = true): Weapon[] {
+  return db.getAllSync(`SELECT * FROM weapons ${ignoreNone ? 'WHERE id > 0' : ''};`)
 }
 
-export async function getWeapon(db: SQLiteDatabase, id: number): Promise<Weapon | null> {
-  return db.getFirstAsync('SELECT * FROM weapons WHERE id = ?;', id)
+export async function getWeapon(db: SQLiteDatabase, id: number, ignoreNone: boolean = true): Promise<Weapon | null> {
+  return db.getFirstAsync(`SELECT * FROM weapons WHERE id = ? ${ignoreNone ? 'AND id > 0' : ''};`, id)
 }
 
 export async function addWeapon(db: SQLiteDatabase, newWeapon: Weapon): Promise<number> {
@@ -158,29 +158,29 @@ export async function addWeapon(db: SQLiteDatabase, newWeapon: Weapon): Promise<
   )).lastInsertRowId
 }
 
-export async function getArmors(db: SQLiteDatabase): Promise<Armor[]> {
-  return db.getAllAsync('SELECT * FROM armor ORDER BY id ASC;')
+export async function getArmors(db: SQLiteDatabase, ignoreNone: boolean = true): Promise<Armor[]> {
+  return db.getAllAsync(`SELECT * FROM armor ${ignoreNone ? 'WHERE id > 0' : ''};`)
 }
 
-export function getArmorsSync(db: SQLiteDatabase): Armor[] {
-  return db.getAllSync('SELECT * FROM armor')
+export function getArmorsSync(db: SQLiteDatabase, ignoreNone: boolean = true): Armor[] {
+  return db.getAllSync(`SELECT * FROM armor ${ignoreNone ? 'WHERE id > 0' : ''};`)
 }
 
-export async function getArmorsByType(db: SQLiteDatabase, type: ArmorType): Promise<Armor[]> {
-  return db.getAllAsync('SELECT * FROM armor WHERE type = ?;', type)
+export async function getArmorsByType(db: SQLiteDatabase, type: ArmorType, ignoreNone: boolean = true): Promise<Armor[]> {
+  return db.getAllAsync(`SELECT * FROM armor WHERE type = ? ${ignoreNone ? 'AND id > 0' : ''};`, type)
 }
 
-export function getArmorsByTypeSync(db: SQLiteDatabase, type: ArmorType): Armor[] {
-  return db.getAllSync('SELECT * FROM armor WHERE type = ?;', type)
+export function getArmorsByTypeSync(db: SQLiteDatabase, type: ArmorType, ignoreNone: boolean = true): Armor[] {
+  return db.getAllSync(`SELECT * FROM armor WHERE type = ? ${ignoreNone ? 'AND id > 0' : ''};`, type)
 }
 
-export async function getArmor(db: SQLiteDatabase, id: number): Promise<Armor | null> {
-  return db.getFirstAsync('SELECT * FROM armor WHERE id = ?;', id)
+export async function getArmor(db: SQLiteDatabase, id: number, ignoreNone: boolean = true): Promise<Armor | null> {
+  return db.getFirstAsync(`SELECT * FROM armor WHERE id = ? ${ignoreNone ? 'AND id > 0' : ''};`, id)
 }
 
-export async function getArmorByType(db: SQLiteDatabase, id: number, type: ArmorType): Promise<Armor | null> {
+export async function getArmorByType(db: SQLiteDatabase, id: number, type: ArmorType, ignoreNone: boolean = true): Promise<Armor | null> {
   return db.getFirstAsync(
-    'SELECT * FROM armor WHERE id = ? AND type = ?;',
+    `SELECT * FROM armor WHERE id = ? AND type = ? ${ignoreNone ? 'AND id > 0' : ''};`,
     id,
     type
   )
@@ -193,16 +193,16 @@ export async function addArmor(db: SQLiteDatabase, newArmor: Armor): Promise<num
   )).lastInsertRowId
 }
 
-export async function getCharms(db: SQLiteDatabase): Promise<Charm[]> {
-  return db.getAllAsync('SELECT * FROM charms ORDER BY id ASC;')
+export async function getCharms(db: SQLiteDatabase, ignoreNone: boolean = true): Promise<Charm[]> {
+  return db.getAllAsync(`SELECT * FROM charms ${ignoreNone ? 'WHERE id > 0' : ''};`)
 }
 
-export function getCharmsSync(db: SQLiteDatabase): Charm[] {
-  return db.getAllSync('SELECT * FROM charms')
+export function getCharmsSync(db: SQLiteDatabase, ignoreNone: boolean = true): Charm[] {
+  return db.getAllSync(`SELECT * FROM charms ${ignoreNone ? 'WHERE id > 0' : ''};`)
 }
 
-export async function getCharm(db: SQLiteDatabase, id: number): Promise<Charm | null> {
-  return db.getFirstAsync('SELECT * FROM charms WHERE id = ?;', id)
+export async function getCharm(db: SQLiteDatabase, id: number, ignoreNone: boolean = true): Promise<Charm | null> {
+  return db.getFirstAsync(`SELECT * FROM charms WHERE id = ? ${ignoreNone ? 'AND id > 0' : ''};`, id)
 }
 
 export async function addCharm(db: SQLiteDatabase, newCharm: Charm): Promise<number> {

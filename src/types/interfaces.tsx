@@ -13,9 +13,9 @@ export interface Build {
 export type Element = "blast" | "dragon" | "fire" | "ice" | "paralysis"
   | "poison" | "raw" | "sleep" | "thunder" | "water";
 
-export type WeaponType = "greatsword" | "longsword" | "sword_and_shield" | "dual_blades"
-  | "hammer" | "hunting_horn" | "lance" | "gunlance" | "switch_axe"
-  | "charge_blade" | "insect_glaive" | "light_bowgun" | "heavy_bowgun" | "bow";
+export type WeaponType = "great-sword" | "long-sword" | "sword-and-shield" | "dual-blades"
+  | "hammer" | "hunting-horn" | "lance" | "gunlance" | "switch-axe"
+  | "charge-blade" | "insect-glaive" | "light-bowgun" | "heavy-bowgun" | "bow";
 
 export type ArmorType = "head" | "chest" | "gloves" | "waist" | "legs" | "charm";
 
