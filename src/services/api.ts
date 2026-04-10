@@ -53,9 +53,8 @@ function isCharmDataArray(object: unknown): object is CharmData[] {
 
 export async function fetchWeaponData(): Promise<Weapon[]> {
   const url = `https://mhw-db.com/weapons`
-  const fetchLowIds = `?q={"id":{"$lt":4}}`
 
-  const res = await fetch(`${url}${fetchLowIds}`)
+  const res = await fetch(url)
 
   if (!res.ok)
     throw new Error('Could not fetch weapon data.')
@@ -87,9 +86,8 @@ export async function fetchWeaponData(): Promise<Weapon[]> {
 }
 export async function fetchArmorData(): Promise<Armor[]> {
   const url = `https://mhw-db.com/armor`
-  const fetchLowIds = `?q={"id":{"$lt":4}}`
 
-  const res = await fetch(`${url}${fetchLowIds}`)
+  const res = await fetch(url)
 
   if (!res.ok)
     throw new Error('Could not fetch armor data.')
@@ -105,15 +103,13 @@ export async function fetchArmorData(): Promise<Armor[]> {
     type: armor.type,
     defense: armor.defense.base
   } as Armor))
-  console.log(armors[0])
 
   return armors
 }
 export async function fetchCharmsData(): Promise<Charm[]> {
   const url = `https://mhw-db.com/charms`
-  const fetchLowIds = `?q={"id":{"$lt":237}}`
 
-  const res = await fetch(`${url}${fetchLowIds}`)
+  const res = await fetch(url)
 
   if (!res.ok)
     throw new Error('Could not fetch charm data.')
@@ -125,7 +121,8 @@ export async function fetchCharmsData(): Promise<Charm[]> {
 
   const charms: Charm[] = charmData.map(charm => ({
     id: charm.id,
-    name: charm.name
+    name: charm.name,
+    type: 'charm'
   } as Charm))
 
   return charms

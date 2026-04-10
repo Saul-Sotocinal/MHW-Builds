@@ -1,6 +1,5 @@
 import { color } from "@/data/color-scheme";
 import { EQUIPMENT_ICONS } from "@/data/equipment_data";
-import { getArmorsByTypeSync, getCharmsSync, getWeaponsSync } from "@/db/repository";
 import { useBuilds } from "@/state/builds-context";
 import { Armor, Build, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
 import { useSQLiteContext } from "expo-sqlite";
@@ -14,39 +13,30 @@ export function EquipmentSelector({ build, props, setSelector }:
     build: Build, props: EquipmentSelectorProps,
     setSelector: Dispatch<SetStateAction<EquipmentSelectorProps>>
   }) {
-  const { update } = useBuilds();
+  const { state, update, fetchData } = useBuilds();
   const db = useSQLiteContext()
-  const renderItem = ({ item }: { item: Weapon | Armor | Charm }) => (
-    <Pressable style={style.item} onPress={() => {
-      const updatedBuild = changeEquipment(item, item.type, build);
+  const renderItem = ({ item }: { item: Weapon | Armor | Charm }) => {
+    return (
+      <Pressable style={style.item} onPress={() => {
+        const updatedBuild = changeEquipment(item, item.type, build);
 
-      setSelector({ isShown: false });
-      update(updatedBuild)
-    }}>
-      <Image style={style.equipment_icon} source={EQUIPMENT_ICONS[item.type]} />
-      <Text>{item.name}</Text>
-    </Pressable>
-  )
+        setSelector({ isShown: false });
+        update(updatedBuild)
+      }}>
+        <Image style={style.equipment_icon} source={EQUIPMENT_ICONS[item.type]} />
+        <Text>{item.name}</Text>
+      </Pressable>
+    )
+  }
 
   if (!props.isShown)
     return;
-
-  let items;
-  if (isWeapon(props.equipment!)) {
-    items = getWeaponsSync(db)
-  }
-  else if (isArmor(props.equipment!)) {
-    items = getArmorsByTypeSync(db, props.equipment.type)
-  }
-  else {
-    items = getCharmsSync(db)
-  }
 
   return (
     <View style={[{ display: props.isShown ? "flex" : "none" }, style.menu]}>
       <Title title={`SELECT EQUIPMENT`} props={{ bgColor: "#67804418", decoColor: "#8cc381" }} />
       <FlatList
-        data={items}
+        data={props.type === 'weapon' ? state.weapons : props.type === 'armor' ? state.armors : state.charms}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()} />
       <Button
@@ -92,9 +82,10 @@ function changeEquipment(newEquipment: Armor | Weapon | Charm, type: string, bui
   return updatedBuild
 }
 
-interface EquipmentSelectorProps {
+export interface EquipmentSelectorProps {
   isShown: boolean,
-  equipment?: Weapon | Armor | Charm
+  equipment?: Weapon | Armor | Charm,
+  type?: 'weapon' | 'armor' | 'charm'
 }
 
 const style = StyleSheet.create({

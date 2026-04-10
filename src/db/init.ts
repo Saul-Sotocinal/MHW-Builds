@@ -1,7 +1,7 @@
 import { SQLiteDatabase } from "expo-sqlite";
 
 export async function initDb(db: SQLiteDatabase) {
-  await reset(db)
+  // await reset(db)
 
   await db.execAsync(`
     pragma journal_mode = 'wal';

@@ -64,23 +64,23 @@ export const AVAILABLE_ARMORS: Armor[] = [
 
 
 export const AVAILABLE_WEAPONS: Weapon[] = [
-  { id: 1, name: "Purgation's Atrocity", type: "greatsword", element: "dragon", attack: 210 },
-  { id: 2, name: "Wildbite", type: "greatsword", element: "sleep", attack: 290 },
+  { id: 1, name: "Purgation's Atrocity", type: "great-sword", element: "dragon", attack: 210 },
+  { id: 2, name: "Wildbite", type: "great-sword", element: "sleep", attack: 290 },
 
-  { id: 3, name: "Adularia Edge", type: "longsword", element: "ice", attack: 270 },
-  { id: 4, name: "Bone Shotel", type: "longsword", element: "raw", attack: 100 },
+  { id: 3, name: "Adularia Edge", type: "long-sword", element: "ice", attack: 270 },
+  { id: 4, name: "Bone Shotel", type: "long-sword", element: "raw", attack: 100 },
 
-  { id: 5, name: "Hunter's Knife I", type: "sword_and_shield", element: "raw", attack: 80 },
-  { id: 6, name: "Lohensieger", type: "sword_and_shield", element: "fire", attack: 270 },
+  { id: 5, name: "Hunter's Knife I", type: "sword-and-shield", element: "raw", attack: 80 },
+  { id: 6, name: "Lohensieger", type: "sword-and-shield", element: "fire", attack: 270 },
 
-  { id: 7, name: "Wyvern Lovers", type: "dual_blades", element: "fire", attack: 240 },
-  { id: 8, name: "Bone Hatchets I", type: "dual_blades", element: "raw", attack: 100 },
+  { id: 7, name: "Wyvern Lovers", type: "dual-blades", element: "fire", attack: 240 },
+  { id: 8, name: "Bone Hatchets I", type: "dual-blades", element: "raw", attack: 100 },
 
   { id: 9, name: "Buona Florescenza", type: "hammer", element: "poison", attack: 250 },
   { id: 10, name: "Bone Bludgeon I", type: "hammer", element: "raw", attack: 100 },
 
-  { id: 11, name: "Magia Charmbell +", type: "hunting_horn", element: "ice", attack: 621 },
-  { id: 12, name: "Austere Paradise", type: "hunting_horn", element: "dragon", attack: 280 },
+  { id: 11, name: "Magia Charmbell +", type: "hunting-horn", element: "ice", attack: 621 },
+  { id: 12, name: "Austere Paradise", type: "hunting-horn", element: "dragon", attack: 280 },
 
   { id: 13, name: "Iron Lance I", type: "lance", element: "raw", attack: 80 },
   { id: 14, name: "Knightly Ectis", type: "lance", element: "ice", attack: 270 },
@@ -88,20 +88,20 @@ export const AVAILABLE_WEAPONS: Weapon[] = [
   { id: 15, name: "Iron Gunlance I", type: "gunlance", element: "raw", attack: 80 },
   { id: 16, name: "Ending Fulgur II", type: "gunlance", element: "thunder", attack: 250 },
 
-  { id: 17, name: "Lightbreak Axe", type: "switch_axe", element: "blast", attack: 300 },
-  { id: 18, name: "Bone Axe I", type: "switch_axe", element: "raw", attack: 90 },
+  { id: 17, name: "Lightbreak Axe", type: "switch-axe", element: "blast", attack: 300 },
+  { id: 18, name: "Bone Axe I", type: "switch-axe", element: "raw", attack: 90 },
 
-  { id: 19, name: "Deep Terroir II", type: "charge_blade", element: "water", attack: 260 },
-  { id: 20, name: "Bone Strongarm I", type: "charge_blade", element: "raw", attack: 90 },
+  { id: 19, name: "Deep Terroir II", type: "charge-blade", element: "water", attack: 260 },
+  { id: 20, name: "Bone Strongarm I", type: "charge-blade", element: "raw", attack: 90 },
 
-  { id: 21, name: "Nexus Gae Bolg", type: "insect_glaive", element: "dragon", attack: 240 },
-  { id: 22, name: "Bone Rod I", type: "insect_glaive", element: "raw", attack: 90 },
+  { id: 21, name: "Nexus Gae Bolg", type: "insect-glaive", element: "dragon", attack: 240 },
+  { id: 22, name: "Bone Rod I", type: "insect-glaive", element: "raw", attack: 90 },
 
-  { id: 23, name: "Chain Blitz I", type: "light_bowgun", element: "raw", attack: 100 },
-  { id: 24, name: "Safi's Aquashot", type: "light_bowgun", element: "water", attack: 250 },
+  { id: 23, name: "Chain Blitz I", type: "light-bowgun", element: "raw", attack: 100 },
+  { id: 24, name: "Safi's Aquashot", type: "light-bowgun", element: "water", attack: 250 },
 
-  { id: 25, name: "Gluttonous Direcannon", type: "heavy_bowgun", element: "raw", attack: 270 },
-  { id: 26, name: "Bone Shooter I", type: "heavy_bowgun", element: "raw", attack: 100 },
+  { id: 25, name: "Gluttonous Direcannon", type: "heavy-bowgun", element: "raw", attack: 270 },
+  { id: 26, name: "Bone Shooter I", type: "heavy-bowgun", element: "raw", attack: 100 },
 
   { id: 27, name: "Iron Bow I", type: "bow", element: "raw", attack: 80 },
   { id: 28, name: "Bow of Vice & Violence", type: "bow", element: "dragon", attack: 370 }

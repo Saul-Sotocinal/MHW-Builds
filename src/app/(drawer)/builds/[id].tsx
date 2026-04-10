@@ -1,4 +1,4 @@
-import { EquipmentSelector } from "@/components/builds/equipment-selector";
+import { EquipmentSelector, EquipmentSelectorProps } from "@/components/builds/equipment-selector";
 import { Label } from "@/components/general/button-label";
 import { Card } from "@/components/general/card";
 import { LineMark } from "@/components/general/line-mark";
@@ -15,13 +15,37 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function BuildDetailScreen() {
-  const { state, remove } = useBuilds();
-  const [selector, setSelector] = useState<{ isShown: boolean, equipment?: Weapon | Armor | Charm }>({ isShown: false });
+  const { state, remove, fetchData } = useBuilds();
+  const [selector, setSelector] = useState<EquipmentSelectorProps>({ isShown: false });
   const { id } = useLocalSearchParams<{ id: string }>();
   const build = state.builds.find((b) => b.id.toString() === id);
   const router = useRouter();
   const BACKGROUND_IMAGE = require('@assets/ui_elements/page_bg.png')
 
+  function EquipmentCard({ equipment, setSelector }
+    : {
+      equipment: Weapon | Armor | Charm; setSelector: Dispatch<SetStateAction<EquipmentSelectorProps>>
+    }) {
+    return <Pressable onPress={() => {
+      const type = isWeapon(equipment) ? 'weapon' :
+        isArmor(equipment) ? 'armor' :
+          'charm'
+      setSelector({ isShown: true, equipment: equipment, type: type })
+      fetchData(type, equipment)
+    }}>
+      <Card iconList={EQUIPMENT_ICONS} type={equipment.type} name={equipment.name}>
+        {isWeapon(equipment) ?
+          <View style={card_style.damage}>
+            <Text style={card_style.text}>{equipment.attack} DMG</Text>
+            <Image source={ELEMENT_ICONS[equipment.element]} style={card_style.element} />
+          </View>
+          : isArmor(equipment) ?
+            <Text style={card_style.text}>{equipment.defense} DEF</Text>
+            : null
+        }
+      </Card>
+    </Pressable>
+  }
   function deleteBuild() {
     Alert.alert("Confirm Deletion", "Are you sure you want to proceed?", [
       {
@@ -33,7 +57,7 @@ export default function BuildDetailScreen() {
         onPress: () => {
           if (build)
             remove(build.id)
-          
+
           router.back();
         }
       }
@@ -59,7 +83,7 @@ export default function BuildDetailScreen() {
           <View>
             <ScrollView>
               <View style={style.build}>
-                <Title title={build.name} renameId={build.id} props={{bgColor: color.RedCard, decoColor: color.RedDeco }} />
+                <Title title={build.name} renameId={build.id} props={{ bgColor: color.RedCard, decoColor: color.RedDeco }} />
 
                 <View>
                   <EquipmentCard equipment={build.weapon} setSelector={setSelector} />
@@ -98,30 +122,6 @@ export default function BuildDetailScreen() {
       </SafeAreaProvider>
     </ImageBackground>
   );
-}
-
-function EquipmentCard({ equipment, setSelector }
-  : {
-    equipment: Weapon | Armor | Charm; setSelector: Dispatch<SetStateAction<{
-      isShown: boolean;
-      equipment?: Weapon | Armor | Charm;
-    }>>
-  }) {
-  return <Pressable onPress={() => {
-    setSelector({ isShown: true, equipment: equipment })
-  }}>
-    <Card iconList={EQUIPMENT_ICONS} type={equipment.type} name={equipment.name}>
-      {isWeapon(equipment) ?
-        <View style={card_style.damage}>
-          <Text style={card_style.text}>{equipment.attack} DMG</Text>
-          <Image source={ELEMENT_ICONS[equipment.element]} style={card_style.element} />
-        </View>
-        : isArmor(equipment) ?
-        <Text style={card_style.text}>{equipment.defense} DEF</Text>
-        : null
-      }
-    </Card>
-  </Pressable>
 }
 
 const style = StyleSheet.create({

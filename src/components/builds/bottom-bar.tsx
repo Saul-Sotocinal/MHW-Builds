@@ -1,4 +1,4 @@
-import { AVAILABLE_WEAPONS, DEFAULT_BUILD_IDS } from '@/data/equipment_data';
+import { DEFAULT_BUILD_IDS } from '@/data/equipment_data';
 import { getArmor, getCharm, getWeapon } from '@/db/repository';
 import { useBuilds } from '@/state/builds-context';
 import { Build, FilterItem } from '@/types/interfaces';
@@ -63,28 +63,28 @@ export function BottomBar({ viewMode, setViewMode, flatListRef }: {
       charm: (await getCharm(db, DEFAULT_BUILD_IDS.charm_id, false))!
     }
 
-    if (state.builds.length > 0) {
-      // sorting to get the highest id
-      const sortedBuilds = state.builds.sort((a, b) => {
-        if (a.id > b.id) return 1;
-        if (a.id < b.id) return -1;
-        return 0;
-      });
+    // if (state.builds.length > 0) {
+    //   // sorting to get the highest id
+    //   const sortedBuilds = state.builds.sort((a, b) => {
+    //     if (a.id > b.id) return 1;
+    //     if (a.id < b.id) return -1;
+    //     return 0;
+    //   });
 
-      // new ids are the highest id numbers + 1
-      newBuild.id = sortedBuilds[state.builds.length - 1].id + 1
+    //   // new ids are the highest id numbers + 1
+    //   newBuild.id = sortedBuilds[state.builds.length - 1].id + 1
 
-      // Changing the weapon of the new build from the deafult if it is filtered
-      // defaults to sword and shield if all weapons are filtered out
-      for (let i = 0; i < DEFAULT_ITEMS.length; i++) {
-        if (items[i].selected) {
-          newBuild.weapon = { ...AVAILABLE_WEAPONS.find((weapon) => weapon.type === items[i].type)! }
-          break
-        }
-        if (i === DEFAULT_ITEMS.length - 1)
-          setHiddenBuilds([...hiddenBuilds, newBuild.id])
-      }
-    }
+    //   // Changing the weapon of the new build from the deafult if it is filtered
+    //   // defaults to sword and shield if all weapons are filtered out
+    //   for (let i = 0; i < DEFAULT_ITEMS.length; i++) {
+    //     if (items[i].selected) {
+    //       newBuild.weapon = { ...AVAILABLE_WEAPONS.find((weapon) => weapon.type === items[i].type)! }
+    //       break
+    //     }
+    //     if (i === DEFAULT_ITEMS.length - 1)
+    //       setHiddenBuilds([...hiddenBuilds, newBuild.id])
+    //   }
+    // }
 
     //  sorting after adding a build to ensure it is sorted
     add(newBuild)

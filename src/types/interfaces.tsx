@@ -49,7 +49,7 @@ export function isWeapon(equipment: Weapon | Armor| Charm): equipment is Weapon 
   return (equipment as Weapon).attack !== undefined;
 }
 
-export function isArmor(equipment: Armor | Charm): equipment is Armor {
+export function isArmor(equipment: Weapon | Armor | Charm): equipment is Armor {
   return (equipment as Armor).defense !== undefined
 }
 

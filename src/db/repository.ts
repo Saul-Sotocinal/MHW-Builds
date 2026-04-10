@@ -94,7 +94,7 @@ export async function getBuild(db: SQLiteDatabase, id: number): Promise<Build | 
 
 export async function addBuild(db: SQLiteDatabase, name: string): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO builds (name, weapon_id, head_id, chest_id, gloves_id, waist_id, legs_id, charm_id) VALUES (?, -1, -1, -2, -3, -4, -5, -1);',
+    'INSERT OR REPLACE INTO builds (name, weapon_id, head_id, chest_id, gloves_id, waist_id, legs_id, charm_id) VALUES (?, -1, -1, -2, -3, -4, -5, -1);',
     name
   )).lastInsertRowId
 }
@@ -133,7 +133,7 @@ export async function getMonster(db: SQLiteDatabase, id: number): Promise<Monste
 
 export async function addMonster(db: SQLiteDatabase, monster: Monster): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO monsters (name, element, classification) VALUES (?, ?, ?);',
+    'INSERT OR REPLACE INTO monsters (name, element, classification) VALUES (?, ?, ?);',
     monster.name, monster.element, monster.classification
   )).lastInsertRowId
 }
@@ -153,8 +153,8 @@ export async function getWeapon(db: SQLiteDatabase, id: number, ignoreNone: bool
 
 export async function addWeapon(db: SQLiteDatabase, newWeapon: Weapon): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO weapons (name, type, element, attack) VALUES (?, ?, ?, ?);',
-    newWeapon.name, newWeapon.type, newWeapon.element, newWeapon.attack
+    'INSERT OR REPLACE INTO weapons (id, name, type, element, attack) VALUES (?, ?, ?, ?, ?);',
+    newWeapon.id, newWeapon.name, newWeapon.type, newWeapon.element, newWeapon.attack
   )).lastInsertRowId
 }
 
@@ -188,8 +188,8 @@ export async function getArmorByType(db: SQLiteDatabase, id: number, type: Armor
 
 export async function addArmor(db: SQLiteDatabase, newArmor: Armor): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO armor (name, type, defense) VALUES (?, ?, ?);',
-    newArmor.name, newArmor.type, newArmor.defense
+    'INSERT OR REPLACE INTO armor (id, name, type, defense) VALUES (?, ?, ?, ?);',
+    newArmor.id, newArmor.name, newArmor.type, newArmor.defense
   )).lastInsertRowId
 }
 
@@ -207,7 +207,7 @@ export async function getCharm(db: SQLiteDatabase, id: number, ignoreNone: boole
 
 export async function addCharm(db: SQLiteDatabase, newCharm: Charm): Promise<number> {
   return (await db.runAsync(
-    'INSERT INTO charms (name) VALUES (?);',
-    newCharm.name
+    'INSERT OR REPLACE INTO charms (id, name) VALUES (?, ?);',
+    newCharm.id, newCharm.name
   )).lastInsertRowId
 }
