@@ -1,7 +1,9 @@
 import { color } from "@/data/color-scheme";
 import { EQUIPMENT_ICONS } from "@/data/equipment_data";
+import { getNoneArmorByType, getNoneCharm, getNoneWeapon } from "@/db/repository";
 import { useBuilds } from "@/state/builds-context";
-import { Armor, Build, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
+import { Armor, ArmorType, Build, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
+import { useSQLiteContext } from "expo-sqlite";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -15,6 +17,7 @@ export function EquipmentSelector({ build, props, setSelector }:
   }) {
   const { state, update, filterEquipment } = useBuilds();
   const [filter, setFilter] = useState('')
+  const db = useSQLiteContext()
   const renderItem = ({ item }: { item: Weapon | Armor | Charm }) => {
     return (
       <Pressable style={style.item} onPress={() => {
@@ -59,27 +62,22 @@ export function EquipmentSelector({ build, props, setSelector }:
         }}
       />
 
-      <View style={style.ranks}>
-        <Pressable style={style.rank_button}>
-          <TextStroke stroke={1} color='black'>
-            <Text style={style.button_text}>LOW</Text>
-          </TextStroke>
-        </Pressable>
+      <Pressable style={style.button} onPress={async () => {
+        let item: Weapon | Armor | Charm;
 
-        <Pressable style={style.rank_button}>
-          <TextStroke stroke={1} color='black'>
-            <Text style={style.button_text}>HIGH</Text>
-          </TextStroke>
-        </Pressable>
+        if (props.type === 'weapon') {
+          item = await getNoneWeapon(db)
+        } else if (props.type === 'charm') {
+          item = await getNoneCharm(db)
+        } else {
+          item = await getNoneArmorByType(db, props.equipment?.type as ArmorType)
+        }
 
-        <Pressable style={style.rank_button}>
-          <TextStroke stroke={1} color='black'>
-            <Text style={style.button_text}>MASTER</Text>
-          </TextStroke>
-        </Pressable>
-      </View>
+        const updatedBuild = changeEquipment(item, item.type, build);
 
-      <Pressable style={style.button}>
+        setSelector({ isShown: false });
+        update(updatedBuild)
+      }}>
         <TextStroke stroke={1} color='black'>
           <Text style={style.remove_button_text}>REMOVE</Text>
         </TextStroke>

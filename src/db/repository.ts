@@ -211,3 +211,15 @@ export async function addCharm(db: SQLiteDatabase, newCharm: Charm): Promise<num
     newCharm.id, newCharm.name
   )).lastInsertRowId
 }
+
+export async function getNoneWeapon(db: SQLiteDatabase): Promise<Weapon> {
+  return (await db.getFirstAsync(`SELECT * FROM weapons WHERE id < 0;`))!
+}
+
+export async function getNoneArmorByType(db: SQLiteDatabase, type: ArmorType): Promise<Armor> {
+  return (await db.getFirstAsync(`SELECT * FROM armor WHERE id < 0 AND type = ?;`, type))!
+}
+
+export async function getNoneCharm(db: SQLiteDatabase): Promise<Charm> {
+  return (await db.getFirstAsync(`SELECT * FROM charms WHERE id < 0;`))!
+}
