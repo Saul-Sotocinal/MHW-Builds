@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "assignment-1-Saul-Sotocinal",
-    "slug": "assignment-1-Saul-Sotocinal",
+    "name": "MHW Builds",
+    "slug": "MHW Builds",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "assignment1saulsotocinal",
+    "scheme": "MHW Builds",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

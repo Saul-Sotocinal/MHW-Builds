@@ -76,7 +76,8 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
 
   async function remove(id: number) {
     try {
-      dispatch({ action: 'removeSuccess', id: await deleteBuild(db, id) })
+      await deleteBuild(db, id)
+      dispatch({ action: 'removeSuccess', id: id })
     } catch (e) {
       if (!isClosedResourceSqliteError(e)) {
         console.error(`DB Error: ${e}`)

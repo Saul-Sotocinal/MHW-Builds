@@ -3,9 +3,10 @@ import { EQUIPMENT_ICONS } from "@/data/equipment_data";
 import { getNoneArmorByType, getNoneCharm, getNoneWeapon } from "@/db/repository";
 import { useBuilds } from "@/state/builds-context";
 import { Armor, ArmorType, Build, Charm, isArmor, isWeapon, Weapon } from "@/types/interfaces";
+import { useNetInfo } from '@react-native-community/netinfo';
 import { useSQLiteContext } from "expo-sqlite";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { TextStroke } from "../general/text-stroke";
 import { Title } from "../general/title";
@@ -18,6 +19,8 @@ export function EquipmentSelector({ build, props, setSelector }:
   const { state, update, filterEquipment } = useBuilds();
   const [filter, setFilter] = useState('')
   const db = useSQLiteContext()
+  const netInfo = useNetInfo()
+
   const renderItem = ({ item }: { item: Weapon | Armor | Charm }) => {
     return (
       <Pressable style={style.item} onPress={() => {
@@ -40,15 +43,25 @@ export function EquipmentSelector({ build, props, setSelector }:
   return (
     <View style={[{ display: props.isShown ? "flex" : "none" }, style.menu]}>
       <Title title={`SELECT EQUIPMENT`} props={{ bgColor: color.OverlayBG, decoColor: "#8db74e" }} />
-      <FlatList
-        data={
-          props.type === 'weapon' ? state.filteredWeapons :
-            props.type === 'armor' ? state.filteredArmors :
-              state.filteredCharms
-        }
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+
+      {!netInfo.isConnected ?
+        <Text style={style.connectivity_text}>
+          Device is not connected to the internet. Only previously viewed equipment will be shown!
+        </Text> :
+        null
+      }
+
+      {state.isLoading ? <ActivityIndicator /> :
+        <FlatList
+          data={
+            props.type === 'weapon' ? state.filteredWeapons :
+              props.type === 'armor' ? state.filteredArmors :
+                state.filteredCharms
+          }
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      }
 
       <TextInput
         numberOfLines={1}
@@ -189,6 +202,12 @@ const style = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  connectivity_text: {
+    textAlign: 'center',
+    color: '#ff7676',
+    fontSize: 15
   },
 
   search: {

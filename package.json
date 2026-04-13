@@ -1,5 +1,5 @@
 {
-  "name": "assignment-1-saul-sotocinal",
+  "name": "MHW Builds",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
+    "@react-native-community/netinfo": "11.4.1",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/drawer": "^7.9.4",
     "@react-navigation/elements": "^2.6.3",
