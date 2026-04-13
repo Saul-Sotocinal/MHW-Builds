@@ -1,12 +1,3 @@
-/**
- * How to use the useContext react hook for passing and modifying its value 
- * by stack overflow user Adam Jenkins
- * https://stackoverflow.com/users/954940/adam-jenkins
- * 
- * Question:
- * https://stackoverflow.com/questions/69247544/how-to-properly-change-react-context-value
- */
-
 import { addArmor, addBuild, addCharm, addWeapon, deleteBuild, getArmorsByType, getBuilds, getCharms, getWeapons, isClosedResourceSqliteError, updateBuild } from "@/db/repository";
 import { fetchArmorData, fetchCharmsData, fetchWeaponData } from "@/services/api";
 import { Armor, Build, Charm, isArmor, Weapon } from "@/types/interfaces";
@@ -14,7 +5,17 @@ import { useSQLiteContext } from "expo-sqlite";
 import { createContext, ReactNode, useContext, useEffect, useReducer } from "react";
 import { buildsReducer, BuildsState } from "./reducer";
 
-const initialState: BuildsState = { builds: [], weapons: [], armors: [], charms: [], isLoading: true, error: null }
+const initialState: BuildsState = { 
+  builds: [], 
+  weapons: [], 
+  filteredWeapons: [], 
+  armors: [], 
+  filteredArmors: [], 
+  charms: [], 
+  filteredCharms: [], 
+  isLoading: true, 
+  error: null 
+}
 
 interface BuildContextType {
   state: BuildsState,
@@ -22,6 +23,7 @@ interface BuildContextType {
   add: (build: Build) => Promise<void>,
   update: (build: Build) => Promise<void>,
   remove: (id: number) => Promise<void>,
+  filterEquipment: (query: string, type: 'weapon' | 'armor' | 'charm') => void,
   fetchData: (type: 'weapon' | 'armor' | 'charm', equipment?: Weapon | Armor | Charm) => Promise<void>
 }
 
@@ -81,6 +83,15 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
         dispatch({ action: 'loadError', errorMsg: 'Failed to delete build from DB.' })
       }
     }
+  }
+
+  function filter(query: string, type: 'weapon' | 'armor' | 'charm') {
+    if (type === 'weapon')
+      dispatch({action: 'filterWeapons', query: query})
+    else if (type === 'armor')
+      dispatch({action: 'filterArmors', query: query})
+    else
+      dispatch({action: 'filterCharms', query: query})
   }
 
   async function fetchData(type: 'weapon' | 'armor' | 'charm', equipment?: Weapon | Armor | Charm) {
@@ -190,6 +201,7 @@ export function BuildsProvider({ children }: { children: ReactNode }) {
       add: add,
       update: update,
       remove: remove,
+      filterEquipment: filter,
       fetchData: fetchData
     }}>
       {children}

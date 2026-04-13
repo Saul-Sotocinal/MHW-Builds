@@ -4,8 +4,12 @@ import { Build } from '@/types/interfaces';
 import { Dispatch, SetStateAction } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
-export function SortMenu({ display, setSortOption }:
-  { display: boolean, setSortOption: Dispatch<SetStateAction<"name" | "damage" | "defense" | "none">> }) {
+export function SortMenu({ display, setSortOption, setState }:
+  {
+    display: boolean,
+    setSortOption: Dispatch<SetStateAction<"name" | "damage" | "defense" | "none">>,
+    setState: Dispatch<SetStateAction<boolean>>
+  }) {
   const { refresh } = useBuilds();
 
   return (
@@ -25,10 +29,15 @@ export function SortMenu({ display, setSortOption }:
         }} />
       </View>
 
-      <Button title="Reset" onPress={() => {
-        refresh();
-        setSortOption("none")
-      }} />
+      <View style={style.top}>
+        <Button title="Reset" onPress={() => {
+          refresh();
+          setSortOption("none")
+        }} />
+        <Button title="Close" onPress={() => {
+          setState(false)
+        }} />
+      </View>
     </View>
   );
 }

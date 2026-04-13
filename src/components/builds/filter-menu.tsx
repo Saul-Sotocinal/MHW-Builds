@@ -6,11 +6,12 @@ import { Dispatch, SetStateAction, useContext } from 'react';
 import { Button, FlatList, Image, StyleSheet, View } from 'react-native';
 import { HiddenBuildsContext } from '../../state/hidden-builds-context';
 
-export function FilterMenu({ display, filterItems, setFilterItems, defaultItems, builds }:
+export function FilterMenu({ display, filterItems, setFilterItems, setState, defaultItems, builds }:
   {
     display: boolean,
     filterItems: FilterItem[],
     setFilterItems: Dispatch<SetStateAction<FilterItem[]>>,
+    setState: Dispatch<SetStateAction<boolean>>,
     defaultItems: FilterItem[],
     builds: Build[]
   }) {
@@ -57,17 +58,25 @@ export function FilterMenu({ display, filterItems, setFilterItems, defaultItems,
         keyExtractor={(item, index) => index.toString()}
         numColumns={3}
       />
-      <Button
-        title="Reset"
-        onPress={() => {
-          const newFilters: FilterItem[] = [...defaultItems]
-          newFilters.forEach((filter) => {
-            filter.selected = true
-          })
-          setFilterItems([...newFilters])
-          setHiddenBuilds([])
-        }}
-      />
+      <View style={style.top}>
+        <Button
+          title="Reset"
+          onPress={() => {
+            const newFilters: FilterItem[] = [...defaultItems]
+            newFilters.forEach((filter) => {
+              filter.selected = true
+            })
+            setFilterItems([...newFilters])
+            setHiddenBuilds([])
+          }}
+        />
+        <Button
+          title="Close"
+          onPress={() => {
+            setState(false)
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -90,5 +99,11 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+  },
+
+  top: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 5
   }
 })

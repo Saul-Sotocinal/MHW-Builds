@@ -118,8 +118,8 @@ export function BottomBar({ viewMode, setViewMode, flatListRef }: {
         <Pressable onPress={changeDisplay}><Label title='DISPLAY ' color='Green' /></Pressable>
       </View>
 
-      <FilterMenu display={filter} filterItems={items} setFilterItems={setItems} defaultItems={DEFAULT_ITEMS} builds={state.builds} />
-      <SortMenu display={sort} setSortOption={setSortOption} />
+      <FilterMenu display={filter} filterItems={items} setFilterItems={setItems} setState={setFilter} defaultItems={DEFAULT_ITEMS} builds={state.builds} />
+      <SortMenu display={sort} setSortOption={setSortOption} setState={setSort} />
     </View>
   </View>
 }
