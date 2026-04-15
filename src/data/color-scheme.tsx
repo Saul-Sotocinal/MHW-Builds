@@ -9,6 +9,11 @@ export const color: colorScheme = {
     // Title Cards
     RedCard: '#813833',
     RedDeco: '#dac342',
+
+    // Overlays
+    OverlayBG: '#2e341dcd',
+    OverButton: '#97a881cd',
+    OverButtonAccent: '#8db74e'
 }
 
 interface colorScheme {
@@ -21,4 +26,7 @@ interface colorScheme {
     RedCard: string,
     RedDeco: string,
 
+    OverlayBG: string,
+    OverButton: string,
+    OverButtonAccent: string
 }

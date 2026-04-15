@@ -17,7 +17,7 @@ export function Card({ iconList, type, name, children, props = DEFAULT_PROPS}: {
         <BorderedIcon iconList={iconList} type={type} size={70} />
 
         <View style={style.details}>
-          <Title title={name} props={{width:30}} />
+          <Title title={name}/>
 
           <View style={style.stats}>
             {children}

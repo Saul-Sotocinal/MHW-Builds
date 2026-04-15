@@ -12,13 +12,13 @@ import { createContext, ReactNode, useState } from "react";
 export const HiddenBuildsContext = createContext<HiddenBuildContextType | undefined>(undefined);
 
 interface HiddenBuildContextType {
-  hiddenBuilds: string[],
-  setHiddenBuilds: React.Dispatch<React.SetStateAction<string[]>>
+  hiddenBuilds: number[],
+  setHiddenBuilds: React.Dispatch<React.SetStateAction<number[]>>
 }
 
 // The hidden builds context is just for hiding filtered builds.
 export function HiddenBuildsContextProvider({ children }: { children: ReactNode }) {
-  const [hiddenBuilds, setHiddenBuilds] = useState<string[]>([]);
+  const [hiddenBuilds, setHiddenBuilds] = useState<number[]>([]);
 
   return (
     <HiddenBuildsContext.Provider value={{ hiddenBuilds, setHiddenBuilds }}>

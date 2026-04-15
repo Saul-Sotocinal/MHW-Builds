@@ -1,50 +1,229 @@
-# Welcome to your Expo app 👋
+# Project Proposal
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Part 1
 
-## Get started
+### App Concept
+An app where you can make equipment builds for the game "Monster Hunter World". This would be used by players to keep track of different builds for different situations. Example: A build to use when hunting a specific monster with a specific weapon.
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+### main interface
+```
+interface Build {
+    id: string;
+    name: string;
+    weapon: string; // will be replaced with weapon object
+    helm?: string; // will be replaced with armor object
+    chest?: string; // will be replaced with armor object
+    gloves?: string; // will be replaced with armor object
+    waist?: string; // will be replaced with armor object
+    legs?: string; // will be replaced with armor object
+    charm?: string; // will be replaced with decoration object
+    decorations: list[string]; // will be replaced with decoration object
+    usage: list[string]; // will be replaced with monster object
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### UI Sketches
+![alt text](./assets/readme-diagrams/ui-concept.png)
 
-## Learn more
+### Component List
+- `BuildList`: Renders a flatlist of builds
+- `BuildCard`: Displays details of build
+- `BuildEquipmentList`: Renders a list of equipment used in a build
+- `EquipmentCard`: Displays equiment detail
+- `AddBuildForm`: Form to create build
+- `EquipmentSelector`: Shows a list of equipment you can use in the build
+- `FilterSelector`: Selector to filter by element, by monster, by weapon type, name or skill
+- `SortSelector`: Selector to sort by damage, defense, alphabetically or skill
 
-To learn more about developing your project with Expo, look at the following resources:
+### Filter Options
+Filters:
+- Builds: Element / Monster / Weapon Type / Name
+- Equipment: Skill / Decoration Slots / Name
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Sorting: 
+- Builds: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
+- Equipment: Damage / Defense / Alphabetically[A-Z, Z-A] / Skill
 
-## Join the community
+## Part 2
 
-Join our community of developers creating universal apps.
+### Route Plan
+/ -> Root (redirects to /(drawer)/builds)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+##### Main Routes
+/(drawer)/builds -> main screen
+
+/(drawer)/monsters -> to see associated weapons
+
+/(drawer)/profile -> user information (not to be implemented yet)
+
+/(drawer)/hunters -> friends(not to be implemented yet)
+
+/(drawer)/map -> to view hunter friends locations (no to be implemented yet)
+
+##### Item level
+
+/builds/[id] -> build detail (dynamic route)
+
+/builds/[id]/edit -> Edit screen (dynamic route)
+
+##### Other routes
+
+/builds/create -> Create modal (presented over current screen)
+
+### State Diagram
+![alt text](./assets/readme-diagrams/state-diagram.png)
+
+### UI Sketches
+Editbuild screen and detailedBuild screen which will look like the card from part 1.
+![alt text](./assets/readme-diagrams/ui-concept2.png)
+
+## Part 3
+
+### SQLite Schema
+
+``` sql
+CREATE TABLE IF NOT EXISTS weapons (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    weapon_type TEXT NOT NULL CHECK (weapon_type IN ("greatsword" , "longsword" , "sword_and_shield" , "dual_blades", "hammer" , "hunting_horn" , "lance" , "gunlance" , "switch_axe", "charge_blade" , "insect_glaive" , "light_bowgun" , "heavy_bowgun" , "bow")),
+    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder", "dragon", "water", "ice", "blast", "paralysis", "poison", "sleep")),
+    attack INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS monsters (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    element TEXT NOT NULL CHECK (element IN ("raw", "fire", "thunder", "dragon", "water", "ice", "blast", "paralysis", "poison", "sleep")),
+    classification TEXT NOT NULL CHECK (classification IN ("bird wyvern" , "brute wyvern" , "fanged wyvern" , "fanged beast", "flying wyvern" , "piscine wyvern" , "relict" , "elder dragon"))
+);
+
+CREATE TABLE IF NOT EXISTS armor (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    armor_type TEXT NOT NULL CHECK (armor_type IN ("helm" , "chest" , "gloves" , "waist", "legs")),
+    defense INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS skills (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+    max_level INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS charms (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL
+    skill_id INTEGER
+
+    FOREIGN KEY(skill_id) REFERENCES skills(id)
+);
+
+CREATE TABLE IF NOT EXISTS armor_skills (
+    armor_skills INTEGER PRIMARY KEY AUTOINCREMENT,
+    armor_id INTEGER,
+    skill_id INTEGER,
+    skill_level INTEGER
+    FOREIGN KEY(armor_id) REFERENCES armor(id),
+    FOREIGN KEY(skill_id) REFERENCES skills(id)
+);
+
+CREATE TABLE IF NOT EXISTS builds (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    weapon_id INTEGER NOT NULL,
+    helm_id INTEGER,
+    chest_id INTEGER,
+    gloves_id INTEGER,
+    waist_id INTEGER,
+    legs_id INTEGER,
+    charm_id INTEGER,
+
+    FOREIGN KEY(weapon_id) REFERENCES weapons(id),
+    FOREIGN KEY(helm_id) REFERENCES armor(id),
+    FOREIGN KEY(chest_id) REFERENCES armor(id),
+    FOREIGN KEY(gloves_id) REFERENCES armor(id),
+    FOREIGN KEY(waist_id) REFERENCES armor(id),
+    FOREIGN KEY(legs_id) REFERENCES armor(id),
+    FOREIGN KEY(charm_id) REFERENCES charms(id),
+);
+
+CREATE TABLE IF NOT EXISTS builds_target_monsters (
+    builds_target_monsters_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    build_id INTEGER,
+    monster_id INTEGER,
+    FOREIGN KEY(build_id) REFERENCES builds(id),
+    FOREIGN KEY(monster_id) REFERENCES monsters(id)
+);
+```
+
+### API Integration Plan
+
+#### Armor
+- Endpoints:
+    - `https://mhw-db.com/armor`
+    - `https://mhw-db.com/armor/{id}`
+- Data: 
+    - id
+    - name
+    - armor type
+    - defense
+    - skills
+- Cache Strat: Data is kept forever as it does not change
+- Update Logic: Check cache first, if not found then fetch
+- User-Created Data: Can be added to a build
+
+#### Weapon
+- Endpoints:
+    - `https://mhw-db.com/weapons`
+    - `https://mhw-db.com/weapons/{id}`
+- Data: 
+    - id
+    - name
+    - weapon type
+    - attack
+    - element
+- Cache Strat: Data is kept forever as it does not change
+- Update Logic: Check cache first, if not found then fetch
+- User-Created Data: Can be added to a build
+
+#### Charm
+- Endpoints:
+    - `https://mhw-db.com/charms`
+    - `https://mhw-db.com/charms/{id}`
+- Data: 
+    - id
+    - name
+    - skill
+- Cache Strat: Data is kept forever as it does not change
+- Update Logic: Check cache first, if not found then fetch
+- User-Created Data: Can be added to a build
+
+#### Skills
+- Endpoints:
+    - `https://mhw-db.com/skills`
+    - `https://mhw-db.com/skills/{id}`
+- Data: 
+    - id
+    - name
+    - max level
+- Cache Strat: Data is kept forever as it does not change
+- Update Logic: Check cache first, if not found then fetch
+- User-Created Data: None
+
+#### Monsters
+- Endpoints:
+    - `https://mhw-db.com/monsters`
+- Data: 
+    - id
+    - name
+    - element
+    - classification
+- Cache Strat: Data is kept forever as it does not change
+- Update Logic: Fetch on first view, check cache age on subsequent views
+- User-Created Data: Can be linked to builds
+
+### UI Sketches
+
+link: https://excalidraw.com/#json=wU8CoNvtojsPuayV_eMgO,qtyQWVgmNoOiNQ0MVo-G7w
+
+![alt text](./assets/readme-diagrams/ui-concept3.png)

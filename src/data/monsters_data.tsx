@@ -29,9 +29,7 @@ export const MONSTER_ICONS: { [name: string]: any } = {
 export interface Monster {
   id: number;
   name: string;
-  type: "bird wyvern" | "brute wyvern" | "fanged wyvern" | "fanged beast"
-  | "flying wyvern" | "piscine wyvern" | "relict" | "elder dragon";
+  type: "bird wyvern" | "brute wyvern" | "fanged wyvern" | "fanged beast" | "flying wyvern" | "piscine wyvern" | "relict" | "elder dragon";
 
-  element: "blast" | "dragon" | "fire" | "ice" | "paralysis"
-  | "poison" | "raw" | "sleep" | "thunder" | "water";
+  element: "blast" | "dragon" | "fire" | "ice" | "paralysis" | "poison" | "raw" | "sleep" | "thunder" | "water";
 }

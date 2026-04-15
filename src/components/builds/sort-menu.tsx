@@ -1,33 +1,43 @@
-import { BuildsContext } from '@/components/builds/builds-context';
+import { color } from '@/data/color-scheme';
+import { useBuilds } from '@/state/builds-context';
 import { Build } from '@/types/interfaces';
-import { Dispatch, SetStateAction, useContext } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
-export function SortMenu({ display, setSortOption }:
-  { display: boolean, setSortOption: Dispatch<SetStateAction<"name" | "damage" | "defense" | "none">> }) {
-  const { builds, setBuilds } = useContext(BuildsContext)!;
+export function SortMenu({ display, setSortOption, setState }:
+  {
+    display: boolean,
+    setSortOption: Dispatch<SetStateAction<"name" | "damage" | "defense" | "none">>,
+    setState: Dispatch<SetStateAction<boolean>>
+  }) {
+  const { refresh } = useBuilds();
 
   return (
     <View style={[{ display: display ? "flex" : "none" }, style.menu]}>
       <View style={style.top}>
         <Button title="Name" onPress={() => {
-          setBuilds([...sortByName(builds)]);
+          refresh("name")
           setSortOption("name")
         }} />
         <Button title="Damage" onPress={() => {
-          setBuilds([...sortByDamage(builds)]);
+          refresh("damage")
           setSortOption("damage")
         }} />
         <Button title="Defense" onPress={() => {
-          setBuilds([...sortByDefense(builds)]);
+          refresh("defense")
           setSortOption("defense")
         }} />
       </View>
 
-      <Button title="Reset" onPress={() => {
-        setBuilds([...resetSort(builds)]);
-        setSortOption("none")
-      }} />
+      <View style={style.top}>
+        <Button title="Reset" onPress={() => {
+          refresh();
+          setSortOption("none")
+        }} />
+        <Button title="Close" onPress={() => {
+          setState(false)
+        }} />
+      </View>
     </View>
   );
 }
@@ -43,8 +53,8 @@ export function sortByName(builds: Build[]) {
 
 export function sortByDamage(builds: Build[]) {
   return builds.sort((a, b) => {
-    if (a.weapon.damage < b.weapon.damage) return 1;
-    else if (a.weapon.damage > b.weapon.damage) return -1;
+    if (a.weapon.attack < b.weapon.attack) return 1;
+    else if (a.weapon.attack > b.weapon.attack) return -1;
     return 0;
   });
 }
@@ -52,13 +62,13 @@ export function sortByDamage(builds: Build[]) {
 export function sortByDefense(builds: Build[]) {
   return builds.sort((a, b) => {
     const aDef =
-      a.helm.defense +
+      a.head.defense +
       a.chest.defense +
       a.gloves.defense +
       a.waist.defense +
       a.legs.defense;
     const bDef =
-      b.helm.defense +
+      b.head.defense +
       b.chest.defense +
       b.gloves.defense +
       b.waist.defense +
@@ -72,8 +82,8 @@ export function sortByDefense(builds: Build[]) {
 
 export function resetSort(builds: Build[]) {
   return builds.sort((a, b) => {
-    if (parseInt(a.id) > parseInt(b.id)) return 1;
-    else if (parseInt(a.id) < parseInt(b.id)) return -1;
+    if (a.id > b.id) return 1;
+    else if (a.id < b.id) return -1;
 
     return 0;
   });
@@ -81,7 +91,7 @@ export function resetSort(builds: Build[]) {
 
 const style = StyleSheet.create({
   menu: {
-    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    backgroundColor: color.OverlayBG,
     position: 'absolute',
     alignItems: 'center',
     bottom: 100,

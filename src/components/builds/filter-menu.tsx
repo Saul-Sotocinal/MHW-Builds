@@ -1,15 +1,17 @@
+import { color } from '@/data/color-scheme';
 import { EQUIPMENT_ICONS } from '@/data/equipment_data';
 import { Build, FilterItem } from '@/types/interfaces';
 import { Checkbox } from 'expo-checkbox';
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { Button, FlatList, Image, StyleSheet, View } from 'react-native';
-import { HiddenBuildsContext } from './hidden-builds-context';
+import { HiddenBuildsContext } from '../../state/hidden-builds-context';
 
-export function FilterMenu({ display, filterItems, setFilterItems, defaultItems, builds }:
+export function FilterMenu({ display, filterItems, setFilterItems, setState, defaultItems, builds }:
   {
     display: boolean,
     filterItems: FilterItem[],
     setFilterItems: Dispatch<SetStateAction<FilterItem[]>>,
+    setState: Dispatch<SetStateAction<boolean>>,
     defaultItems: FilterItem[],
     builds: Build[]
   }) {
@@ -21,7 +23,7 @@ export function FilterMenu({ display, filterItems, setFilterItems, defaultItems,
         const foundItem: FilterItem = filterItems.find((filterItem) => filterItem.id === item.id)!
         foundItem.selected = !foundItem.selected
 
-        const newHiddenBuilds: string[] = [...hiddenBuilds]
+        const newHiddenBuilds: number[] = [...hiddenBuilds]
 
         if (foundItem.selected) {
           //removing items from the filter when it is unchecked
@@ -53,20 +55,28 @@ export function FilterMenu({ display, filterItems, setFilterItems, defaultItems,
       <FlatList
         data={filterItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => index.toString()}
         numColumns={3}
       />
-      <Button
-        title="Reset"
-        onPress={() => {
-          const newFilters: FilterItem[] = [...defaultItems]
-          newFilters.forEach((filter) => {
-            filter.selected = true
-          })
-          setFilterItems([...newFilters])
-          setHiddenBuilds([])
-        }}
-      />
+      <View style={style.top}>
+        <Button
+          title="Reset"
+          onPress={() => {
+            const newFilters: FilterItem[] = [...defaultItems]
+            newFilters.forEach((filter) => {
+              filter.selected = true
+            })
+            setFilterItems([...newFilters])
+            setHiddenBuilds([])
+          }}
+        />
+        <Button
+          title="Close"
+          onPress={() => {
+            setState(false)
+          }}
+        />
+      </View>
     </View>
   );
 }
@@ -75,7 +85,7 @@ const style = StyleSheet.create({
   menu: {
     position: "absolute",
     bottom: 100,
-    backgroundColor: 'rgba(34, 34, 34, 0.8)',
+    backgroundColor: color.OverlayBG,
     width: "100%",
     alignItems: "center",
     padding: 10
@@ -89,5 +99,11 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
+  },
+
+  top: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 5
   }
 })

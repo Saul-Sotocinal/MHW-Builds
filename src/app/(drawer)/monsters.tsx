@@ -15,7 +15,7 @@ export default function Monsters() {
           <FlatList
             data={MONSTERS}
             renderItem={CompactCard}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item, index) => index.toString()}
           />
         </SafeAreaView>
       </SafeAreaProvider>
