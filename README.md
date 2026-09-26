@@ -1,5 +1,9 @@
 # Project Proposal
 
+# Demo
+
+https://github.com/user-attachments/assets/65ab7414-7a29-488c-aaa6-053570eb95df
+
 ## Part 1
 
 ### App Concept
